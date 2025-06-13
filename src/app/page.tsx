@@ -30,7 +30,7 @@ export default function Home() {
       {/* Hero Section */}
       <section id="hero" className="flex flex-col items-center justify-center text-center pt-10 pb-16 px-4 bg-gradient-to-br from-[#38bdf8] via-[#2563eb] to-[#6ee7b7] min-h-[70vh]">
         <Image
-          src="/Sipeat_logo.png"
+          src="/SipEat.png"
           alt="Refreshing Cold Drink"
           width={250}
           height={250}
