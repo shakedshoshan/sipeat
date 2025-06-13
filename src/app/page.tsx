@@ -18,9 +18,9 @@ export default function Home() {
       {/* Sticky Navigation */}
       <nav className="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur shadow-sm border-b border-[#38bdf8]">
         <div className="max-w-4xl mx-auto flex justify-between items-center px-4 py-2">
-          <span className="font-extrabold text-[#2563eb] text-lg tracking-tight">Sipeat</span>
+          <span className="font-extrabold text-[#2563eb] text-2xl tracking-tight">Sipeat</span>
           <div className="flex gap-4">
-            <Link href="/request" className="px-3 py-1 rounded bg-[#facc15] text-[#2563eb] font-medium hover:bg-[#ffe066] transition">
+            <Link href="/request" className="px-3 py-1 rounded-full bg-[#facc15] text-[#2563eb] font-medium hover:bg-[#ffe066] transition">
               Request a Drink
             </Link>
           </div>
