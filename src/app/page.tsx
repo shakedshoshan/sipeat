@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -18,6 +19,11 @@ export default function Home() {
       <nav className="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur shadow-sm border-b border-[#38bdf8]">
         <div className="max-w-4xl mx-auto flex justify-between items-center px-4 py-2">
           <span className="font-extrabold text-[#2563eb] text-lg tracking-tight">Sipeat</span>
+          <div className="flex gap-4">
+            <Link href="/request" className="px-3 py-1 rounded bg-[#facc15] text-[#2563eb] font-medium hover:bg-[#ffe066] transition">
+              Request a Drink
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -33,12 +39,12 @@ export default function Home() {
         />
         <h1 className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow mb-4">Refresh Your Day!</h1>
         <p className="text-lg sm:text-xl text-white/90 mb-6 max-w-md">Delicious, ice-cold drinks available instantly from our vending machines. Taste the chill, feel the thrill!</p>
-        <a
+        <Link
           href="#how"
           className="inline-block bg-[#facc15] text-[#2563eb] font-bold px-8 py-3 rounded-full shadow hover:bg-[#ffe066] transition mb-2"
         >
           How It Works
-        </a>
+        </Link>
       </section>
 
       {/* How It Works */}
@@ -67,10 +73,16 @@ export default function Home() {
               <p className="text-gray-600 text-sm">Submit your request and we&apos;ll do the rest!</p>
             </div>
           </div>
+          <div className="mt-8">
+            <Link
+              href="/request"
+              className="inline-block bg-[#2563eb] text-white font-bold px-8 py-3 rounded-full shadow hover:bg-[#1d4ed8] transition"
+            >
+              Request a Drink Now
+            </Link>
+          </div>
         </div>
       </section>
-
-   
 
       {/* Contact Section */}
       <section id="contact" className="flex flex-col items-center text-center py-16 px-4 bg-gradient-to-br from-[#2563eb] via-[#38bdf8] to-[#6ee7b7] text-white">
