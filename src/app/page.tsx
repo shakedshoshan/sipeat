@@ -47,46 +47,30 @@ export default function Home() {
         <div className="max-w-2xl mx-auto flex flex-col gap-6">
           <p className="text-base sm:text-lg text-gray-700">
             <span className="font-semibold text-[#2563eb]">Want your favorite drink in your local vending machine?</span> <br />
-            With Sipeat, you can <span className="font-bold">request a specific drink</span> to be stocked in a vending machine near you! Just let us know what you crave, and we'll do our best to make it available at your chosen location.
+            With Sipeat, you can
+            <span className="font-bold">request a specific drink</span> to be stocked in a vending machine near you! Just let us know what you crave, and we&apos;ll do our best to make it available at your chosen location.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center mt-4">
             <div className="bg-[#f3f4f6] rounded-xl shadow p-6 flex-1 min-w-[220px] border-t-4 border-[#38bdf8]">
-              <Image src="/choose-drink.png" alt="Choose Drink" width={60} height={60} className="mx-auto mb-2" />
+              <Image src="/icons/drink.png" alt="Choose Drink" width={60} height={60} className="mx-auto mb-2" />
               <h3 className="font-bold text-[#2563eb] mb-1">1. Choose Your Drink</h3>
               <p className="text-gray-600 text-sm">Browse our selection and pick your favorite flavor.</p>
             </div>
             <div className="bg-[#f3f4f6] rounded-xl shadow p-6 flex-1 min-w-[220px] border-t-4 border-[#6ee7b7]">
-              <Image src="/location.png" alt="Select Location" width={60} height={60} className="mx-auto mb-2" />
+              <Image src="/icons/machine.png" alt="Select Location" width={60} height={60} className="mx-auto mb-2" />
               <h3 className="font-bold text-[#2563eb] mb-1">2. Select Machine</h3>
               <p className="text-gray-600 text-sm">Tell us which vending machine you want it in.</p>
             </div>
             <div className="bg-[#f3f4f6] rounded-xl shadow p-6 flex-1 min-w-[220px] border-t-4 border-[#facc15]">
-              <Image src="/request.png" alt="Request" width={60} height={60} className="mx-auto mb-2" />
+              <Image src="/icons/send.png" alt="Request" width={60} height={60} className="mx-auto mb-2" />
               <h3 className="font-bold text-[#2563eb] mb-1">3. Request</h3>
-              <p className="text-gray-600 text-sm">Submit your request and we'll do the rest!</p>
+              <p className="text-gray-600 text-sm">Submit your request and we&apos;ll do the rest!</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section id="testimonials" className="flex flex-col items-center text-center py-16 px-4 bg-[#f3f4f6]">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-[#2563eb]">What Our Customers Say</h2>
-        <div className="flex flex-col sm:flex-row gap-6 max-w-4xl w-full justify-center">
-          <blockquote className="bg-white rounded-xl p-6 shadow text-[#2563eb] flex-1 border-l-4 border-[#38bdf8]">
-            "Absolutely love these drinks! So refreshing and tasty."
-            <span className="block mt-2 text-sm text-[#38bdf8] font-semibold">– Alex P.</span>
-          </blockquote>
-          <blockquote className="bg-white rounded-xl p-6 shadow text-[#2563eb] flex-1 border-l-4 border-[#6ee7b7]">
-            "I requested my favorite flavor and it was in my local machine the next week!"
-            <span className="block mt-2 text-sm text-[#6ee7b7] font-semibold">– Jamie L.</span>
-          </blockquote>
-          <blockquote className="bg-white rounded-xl p-6 shadow text-[#2563eb] flex-1 border-l-4 border-[#facc15]">
-            "The vending machines are everywhere, and the drinks are always ice-cold!"
-            <span className="block mt-2 text-sm text-[#facc15] font-semibold">– Morgan S.</span>
-          </blockquote>
-        </div>
-      </section>
+   
 
       {/* Contact Section */}
       <section id="contact" className="flex flex-col items-center text-center py-16 px-4 bg-gradient-to-br from-[#2563eb] via-[#38bdf8] to-[#6ee7b7] text-white">
