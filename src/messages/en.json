@@ -1,0 +1,52 @@
+{
+  "navigation": {
+    "contactUs": "Contact Us"
+  },
+  "hero": {
+    "companyName": "Sipeat",
+    "slogan": "Show employees that you care, every day",
+    "learnMore": "Learn More"
+  },
+  "whoAreWe": {
+    "title": "Who Are We?",
+    "description": "Sipeat is a company for installing and managing drink and snack machines, offering a full service – from installation to maintenance – for businesses and institutions in the central and Sharon regions. We believe in personal service, clean and maintained machines, and a perfect fit for the needs of each customer."
+  },
+  "whyChooseUs": {
+    "title": "Why Choose Us?",
+    "reasons": {
+      "support": {
+        "title": "Always there when needed",
+        "description": "Technical support and a quick response to any malfunction – without delays and without excuses."
+      },
+      "price": {
+        "title": "Pleasure without breaking the bank",
+        "description": "Our product prices are among the cheapest on the market, without compromising on quality!"
+      },
+      "customer": {
+        "title": "The customer is always at the center",
+        "description": "We listen, respond, and update according to your needs and desires."
+      }
+    }
+  },
+  "suitableFor": {
+    "title": "Who is our service suitable for?",
+    "description": "Sipeat's service is designed for places with constant movement of employees - such as offices and factories. Wherever employees are looking for a moment of refreshment during the day - we bring the perfect solution: advanced machines, accessible and full of treats. No fuss, no maintenance - just a smooth experience that fits into the routine of your place.",
+    "cta": {
+      "title": "What are you waiting for?",
+      "description": "Leave your details and we will get back to you as soon as possible",
+      "button": "Contact Us Now"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "description": "Interested in our services? Fill out the form below and we'll get back to you as soon as possible!",
+    "form": {
+      "name": "Your Name",
+      "email": "Your Email",
+      "phone": "Your Phone Number",
+      "message": "Your Message",
+      "submit": "Send Message"
+    }
+  },
+  "backToTop": "Back to top"
+} 
