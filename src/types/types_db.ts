@@ -17,7 +17,6 @@ export interface DrinkRequest {
   customer_name: string;
   drink_name: string;
   machine: string; // UUID reference to Machine.id
-  message?: string | null;
 }
 
 // Filter operator types for queries

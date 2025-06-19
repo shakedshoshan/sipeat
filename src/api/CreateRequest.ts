@@ -23,7 +23,6 @@ export async function createDrinkRequest(requestData: DrinkRequestData) {
           customer_name: requestData.customer_name,
           drink_name: requestData.drink_name,
           machine: requestData.machine,
-          message: requestData.message || null,
         }
       ])
       .select();
