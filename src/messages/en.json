@@ -68,9 +68,8 @@
     "errorLoadingMachines": "Error loading machines. Please try again later."
   },
   "statusPage": {
-    "title": "Request Submitted!",
-    "message": "Your drink request has been successfully submitted. We'll process it as soon as possible.",
-    "submitAnother": "Submit Another Request",
+    "title": "Thank you (name) for contacting us!",
+    "message": "Our team has received your request and maybe this product has been added to (name of the machine)",
     "returnHome": "Return to Home"
   }
 } 

@@ -2,11 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Messages } from "@/types/translate_type";
 
 export default function StatusPage() {
   const [messages, setMessages] = useState<Messages | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const searchParams = useSearchParams();
+  const customerName = searchParams.get('customer_name') || '';
+  const machineName = searchParams.get('machine_name') || '';
 
   useEffect(() => {
     const loadTranslations = async () => {
@@ -30,6 +34,10 @@ export default function StatusPage() {
     return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
   }
 
+  // Replace placeholders with actual values from URL params
+  const interpolatedTitle = messages.statusPage.title.replace("(name)", customerName);
+  const interpolatedMessage = messages.statusPage.message.replace("(name of the machine)", machineName);
+
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4">
       <div className="max-w-4xl mx-auto">
@@ -41,9 +49,9 @@ export default function StatusPage() {
               </svg>
             </div>
             
-            <h1 className="text-3xl font-bold text-gray-800 mb-3">{messages.statusPage.title}</h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-3">{interpolatedTitle}</h1>
             <p className="text-lg text-gray-600 mb-8">
-              {messages.statusPage.message}
+              {interpolatedMessage}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

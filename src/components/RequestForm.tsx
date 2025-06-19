@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { DrinkRequestData } from "@/api/CreateRequest";
 import { useSupabaseQuery } from "@/hooks/useSupabase";
 import { Machine } from "@/types/types_db";
-import { useEffect } from "react";
 import { Messages } from "@/types/translate_type";
+import { drinksList } from "@/types/drinks_list";
 
 export default function RequestForm() {
   const [messages, setMessages] = useState<Messages | null>(null);
@@ -20,6 +20,14 @@ export default function RequestForm() {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Filter drinks based on search term
+  const filteredDrinks = drinksList.filter(drink => 
+    drink.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   useEffect(() => {
     const loadTranslations = async () => {
@@ -39,6 +47,20 @@ export default function RequestForm() {
     loadTranslations();
   }, []);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   // Fetch machines from Supabase
   const { data: machines, loading: loadingMachines, error: machinesError } = 
     useSupabaseQuery<Machine>('machine', '*', { 
@@ -55,12 +77,30 @@ export default function RequestForm() {
     }));
   };
 
+  const handleDrinkSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    setIsDropdownOpen(true);
+  };
+
+  const handleDrinkSelect = (drinkName: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      drink_name: drinkName,
+    }));
+    setSearchTerm(drinkName);
+    setIsDropdownOpen(false);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
 
     try {
+      // Find the selected machine to get its name
+      const selectedMachine = machines?.find(m => m.id === formData.machine);
+      const machineName = selectedMachine?.name || formData.machine;
+
       const response = await fetch("/api/requests", {
         method: "POST",
         headers: {
@@ -74,8 +114,8 @@ export default function RequestForm() {
         throw new Error(errorData.error || "Failed to submit drink request");
       }
 
-      // Redirect to status page on success
-      router.push("/status");
+      // Redirect to status page with customer_name and machine_name as URL params
+      router.push(`/request/status?customer_name=${encodeURIComponent(formData.customer_name)}&machine_name=${encodeURIComponent(machineName)}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An unknown error occurred");
       setIsSubmitting(false);
@@ -119,20 +159,45 @@ export default function RequestForm() {
           />
         </div>
         
-        <div className="mb-4">
-          <label htmlFor="drink_name" className="block text-sm font-medium text-gray-700 mb-1">
+        <div className="mb-4" ref={dropdownRef}>
+          <label htmlFor="drink_search" className="block text-sm font-medium text-gray-700 mb-1">
             {messages.requestForm.drinkName}
           </label>
           <input
             type="text"
-            id="drink_name"
-            name="drink_name"
-            value={formData.drink_name}
-            onChange={handleChange}
-            required
+            id="drink_search"
+            value={searchTerm}
+            onChange={handleDrinkSearch}
+            onClick={() => setIsDropdownOpen(true)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38bdf8]"
             placeholder={messages.requestForm.drinkNamePlaceholder}
+            autoComplete="off"
           />
+          <input 
+            type="hidden" 
+            name="drink_name" 
+            value={formData.drink_name} 
+          />
+          
+          {isDropdownOpen && (
+            <div className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm">
+              {filteredDrinks.length > 0 ? (
+                filteredDrinks.map((drink: { name: string }) => (
+                  <div
+                    key={drink.name}
+                    className="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-gray-100"
+                    onClick={() => handleDrinkSelect(drink.name)}
+                  >
+                    {drink.name}
+                  </div>
+                ))
+              ) : (
+                <div className="cursor-default select-none relative py-2 pl-3 pr-9 text-gray-500">
+                  No drinks found
+                </div>
+              )}
+            </div>
+          )}
         </div>
         
         <div className="mb-4">

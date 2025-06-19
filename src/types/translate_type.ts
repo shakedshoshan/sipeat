@@ -68,7 +68,6 @@ export interface Messages {
     statusPage: {
       title: string;
       message: string;
-      submitAnother: string;
       returnHome: string;
     };
   }
