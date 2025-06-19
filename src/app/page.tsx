@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Messages } from "@/types/translate_type";
 import ContactUs from "@/components/ContactUs";
+import AboutUs from "@/components/AboutUs";
 
 
 export default function Home() {
@@ -46,7 +47,6 @@ export default function Home() {
 
   return (
     <div className="relative flex flex-col min-h-screen font-sans bg-gradient-to-b from-[#38bdf8] via-[#6ee7b7] to-[#f3f4f6]">
-      
 
       {/* Hero Section */}
       <section id="hero" className="flex flex-col items-center justify-center text-center pt-4 pb-16 px-4 bg-gradient-to-br from-[#38bdf8] via-[#2563eb] to-[#6ee7b7] min-h-[70vh]">
@@ -60,17 +60,12 @@ export default function Home() {
         />
         <p className="text-lg sm:text-2xl text-white/90 mb-6 max-w-md font-semibold">{messages.hero.slogan}</p>
         <Link
-          href="#who"
-          className="inline-block bg-[#facc15] text-[#2563eb] font-bold px-8 py-3 rounded-full shadow hover:bg-[#ffe066] transition mb-2"
-        >
-          {messages.hero.learnMore}
-        </Link>
-        <Link
           href="#contact"
           className="inline-block bg-[#facc15] text-[#2563eb] font-bold px-8 py-3 rounded-full shadow hover:bg-[#ffe066] transition mb-2"
         >
           {messages.hero.contact}
         </Link>
+       
       </section>
 
       {/* Who Are We Section */}
@@ -108,24 +103,25 @@ export default function Home() {
       </section>
 
       {/* Who is our service suitable for */}
-      <section id="suitable" className="flex flex-col items-center text-center py-16 px-4 bg-white">
+      <section id="suitable" className="flex flex-col items-center text-center py-12 px-4 bg-white">
         <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-[#2563eb]">{messages.suitableFor.title}</h2>
         <div className="max-w-2xl mx-auto">
           <p className="text-base sm:text-lg text-gray-700 mb-6">
             {messages.suitableFor.description}
           </p>
           <div className="mt-8">
-            <h3 className="text-xl font-bold mb-4 text-[#2563eb]">{messages.suitableFor.cta.title}</h3>
-            <p className="mb-6">{messages.suitableFor.cta.description}</p>
-            <Link
-              href="#contact"
-              className="inline-block bg-[#2563eb] text-white font-bold px-8 py-3 rounded-full shadow hover:bg-[#1d4ed8] transition"
+          <Link
+              href="/aboutUs"
+              className="inline-block bg-[#2563eb] text-white font-bold px-8 py-3 rounded-full shadow hover:bg-[#1d4ed8] transition mb-8"
             >
-              {messages.suitableFor.cta.button}
+              {messages.moreAboutUs.title}
             </Link>
+            <h3 className="text-xl font-bold mb-4 text-[#2563eb]">{messages.suitableFor.cta.title}</h3>
+            <p className="mb-6">{messages.suitableFor.cta.description}</p> 
           </div>
         </div>
       </section>
+
 
       {/* Contact Section */}
       <section id="contact" className="flex flex-col items-center text-center py-16 px-4 bg-gradient-to-br from-[#2563eb] via-[#38bdf8] to-[#6ee7b7] text-white">

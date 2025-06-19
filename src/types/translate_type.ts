@@ -34,6 +34,9 @@ export interface Messages {
         button: string;
       };
     };
+    moreAboutUs: {
+      title: string;
+    };
     contact: {
       title: string;
       description: string;

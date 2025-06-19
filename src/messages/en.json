@@ -38,6 +38,9 @@
       "button": "Contact Us Now"
     }
   },
+  "moreAboutUs": {
+    "title": "More About Our Service"
+  },
   "contact": {
     "title": "Contact Us",
     "description": "Interested in our services? Fill out the form below and we'll get back to you as soon as possible!",
