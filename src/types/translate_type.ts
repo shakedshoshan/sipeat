@@ -2,6 +2,7 @@ export interface Messages {
     hero: {
       slogan: string;
       learnMore: string;
+      contact: string;
     };
     whoAreWe: {
       title: string;

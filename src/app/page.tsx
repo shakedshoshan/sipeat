@@ -49,7 +49,7 @@ export default function Home() {
       
 
       {/* Hero Section */}
-      <section id="hero" className="flex flex-col items-center justify-center text-center pt-10 pb-16 px-4 bg-gradient-to-br from-[#38bdf8] via-[#2563eb] to-[#6ee7b7] min-h-[70vh]">
+      <section id="hero" className="flex flex-col items-center justify-center text-center pt-4 pb-16 px-4 bg-gradient-to-br from-[#38bdf8] via-[#2563eb] to-[#6ee7b7] min-h-[70vh]">
         <Image
           src="/SipEat.png"
           alt="Sipeat Logo"
@@ -64,6 +64,12 @@ export default function Home() {
           className="inline-block bg-[#facc15] text-[#2563eb] font-bold px-8 py-3 rounded-full shadow hover:bg-[#ffe066] transition mb-2"
         >
           {messages.hero.learnMore}
+        </Link>
+        <Link
+          href="#contact"
+          className="inline-block bg-[#facc15] text-[#2563eb] font-bold px-8 py-3 rounded-full shadow hover:bg-[#ffe066] transition mb-2"
+        >
+          {messages.hero.contact}
         </Link>
       </section>
 
