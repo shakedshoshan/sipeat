@@ -115,7 +115,7 @@ export default function RequestForm() {
       }
 
       // Redirect to status page with customer_name and machine_name as URL params
-      router.push(`/request/status?customer_name=${encodeURIComponent(formData.customer_name)}&machine_name=${encodeURIComponent(machineName)}`);
+      router.push(`/status?customer_name=${encodeURIComponent(formData.customer_name)}&machine_name=${encodeURIComponent(machineName)}&type=request`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An unknown error occurred");
       setIsSubmitting(false);

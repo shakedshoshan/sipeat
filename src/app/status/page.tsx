@@ -11,6 +11,7 @@ export default function StatusPage() {
   const searchParams = useSearchParams();
   const customerName = searchParams.get('customer_name') || '';
   const machineName = searchParams.get('machine_name') || '';
+  const type = searchParams.get('type') || '';
 
   useEffect(() => {
     const loadTranslations = async () => {
@@ -35,8 +36,8 @@ export default function StatusPage() {
   }
 
   // Replace placeholders with actual values from URL params
-  const interpolatedTitle = messages.statusPage.title.replace("(name)", customerName);
-  const interpolatedMessage = messages.statusPage.message.replace("(name of the machine)", machineName);
+  const interpolatedTitle = type === 'request' ? messages.statusPage.title.replace("(name)", customerName) : messages.statusPageContact.title;
+  const interpolatedMessage = type === 'request' ? messages.statusPage.message.replace("(name of the machine)", machineName) : messages.statusPageContact.message;
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4">
@@ -55,9 +56,15 @@ export default function StatusPage() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/" className="inline-block px-6 py-3 bg-gray-100 text-gray-700 font-medium rounded-md hover:bg-gray-200 transition-colors">
-                {messages.statusPage.returnHome}
-              </Link>
+              {type === 'contact' ? (
+                <Link href="/" className="inline-block px-6 py-3 bg-gray-100 text-gray-700 font-medium rounded-md hover:bg-gray-200 transition-colors">
+                  {messages.statusPage.returnHome}
+                </Link>
+              ) : (
+                <Link href="/request" className="inline-block px-6 py-3 bg-gray-100 text-gray-700 font-medium rounded-md hover:bg-gray-200 transition-colors">
+                  {messages.statusPageContact.anotherRequest}
+                </Link>
+              )}
             </div>
           </div>
         </div>

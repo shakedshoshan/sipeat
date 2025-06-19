@@ -70,6 +70,13 @@
   "statusPage": {
     "title": "Thank you (name) for contacting us!",
     "message": "Our team has received your request and maybe this product has been added to (name of the machine)",
+    "anotherRequest": "Submit another request",
+    "returnHome": "Return to Home"
+  },
+  "statusPageContact": {
+    "title": "Thank you for contacting us!",
+    "message": "Our team has received your request",
+    "anotherRequest": "Submit another request",
     "returnHome": "Return to Home"
   }
 } 

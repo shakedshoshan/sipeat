@@ -70,6 +70,13 @@
   "statusPage": {
     "title": "תודה (שם) שפנית אלינו!",
     "message": "צוותינו קיבל את בקשתך ואולי מוצר זה היכנס ל(שם המכונה)",
+    "anotherRequest": "שלח בקשה נוספת",
+    "returnHome": "חזרה לדף הבית"
+  },
+  "statusPageContact": {
+    "title": "תודה שפנית אלינו!",
+    "message": "אנו נחזור אליכם בהקדם",
+    "anotherRequest": "שלח בקשה נוספת",
     "returnHome": "חזרה לדף הבית"
   }
 } 

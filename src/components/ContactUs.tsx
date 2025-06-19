@@ -24,7 +24,7 @@ export default function ContactUs({ messages }: { messages: Messages }) {
     try {
       const result = await createContact(contactData);
       if (result) {
-        router.push("/status");
+        router.push("/status?type=contact");
       } else {
         setError(messages.contact.form.error || "Failed to submit the form. Please try again.");
       }

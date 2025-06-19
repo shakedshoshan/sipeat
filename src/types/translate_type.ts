@@ -68,6 +68,13 @@ export interface Messages {
     statusPage: {
       title: string;
       message: string;
+      anotherRequest: string;
+      returnHome: string;
+    };
+    statusPageContact: {
+      title: string;
+      message: string;
+      anotherRequest: string;
       returnHome: string;
     };
   }
