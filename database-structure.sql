@@ -1,6 +1,15 @@
 -- WARNING: This schema is for context only and is not meant to be run.
 -- Table order and constraints may not be valid for execution.
 
+CREATE TABLE public.contact (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  name text NOT NULL,
+  email text NOT NULL,
+  phone bigint NOT NULL,
+  message text NOT NULL,
+  CONSTRAINT contact_pkey PRIMARY KEY (id)
+);
 CREATE TABLE public.machine (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
   name text NOT NULL,
@@ -12,7 +21,6 @@ CREATE TABLE public.machine (
 CREATE TABLE public.request (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
   customer_name text NOT NULL,
-  message text,
   drink_name text NOT NULL,
   machine uuid,
   CONSTRAINT request_pkey PRIMARY KEY (id),
