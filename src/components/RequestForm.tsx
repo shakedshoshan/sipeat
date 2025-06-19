@@ -10,7 +10,6 @@ export default function RequestForm() {
     customer_name: "",
     drink_name: "",
     machine: "",
-    message: "",
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,7 +57,6 @@ export default function RequestForm() {
         customer_name: "",
         drink_name: "",
         machine: "",
-        message: "",
       });
       setSuccess(true);
     } catch (err) {
@@ -146,21 +144,6 @@ export default function RequestForm() {
           {loadingMachines && (
             <p className="text-sm text-gray-500 mt-1">Loading machines...</p>
           )}
-        </div>
-        
-        <div className="mb-6">
-          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-            Message (Optional)
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message || ""}
-            onChange={handleChange}
-            rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38bdf8]"
-            placeholder="Any additional information about your request"
-          />
         </div>
         
         <button

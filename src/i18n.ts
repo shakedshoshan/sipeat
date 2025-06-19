@@ -4,7 +4,11 @@ export const locales = ['en', 'he'] as const;
 export type Locale = (typeof locales)[number];
 
 export default getRequestConfig(async ({ locale }) => {
+  // Ensure locale is a string and is one of the supported locales
+  const safeLocale = (locale && locales.includes(locale as Locale)) ? locale : 'en';
+  
   return {
-    messages: (await import(`./messages/${locale}.json`)).default,
+    locale: safeLocale,
+    messages: (await import(`./messages/${safeLocale}.json`)).default,
   };
 }); 
