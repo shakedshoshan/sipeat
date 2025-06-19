@@ -42,7 +42,32 @@ export interface Messages {
         phone: string;
         message: string;
         submit: string;
+        error?: string;
+        submitting?: string;
       };
     };
     backToTop: string;
+    requestPage: {
+      title: string;
+      backToHome: string;
+    };
+    requestForm: {
+      title: string;
+      customerName: string;
+      customerNamePlaceholder: string;
+      drinkName: string;
+      drinkNamePlaceholder: string;
+      selectMachine: string;
+      selectMachinePlaceholder: string;
+      loadingMachines: string;
+      submitButton: string;
+      submittingButton: string;
+      errorLoadingMachines: string;
+    };
+    statusPage: {
+      title: string;
+      message: string;
+      submitAnother: string;
+      returnHome: string;
+    };
   }

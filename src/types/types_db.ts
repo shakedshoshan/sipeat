@@ -19,6 +19,14 @@ export interface DrinkRequest {
   machine: string; // UUID reference to Machine.id
 }
 
+export interface Contact {
+  id: string; // UUID
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
 // Filter operator types for queries
 export type FilterOperator = 
   | 'eq'   // equals

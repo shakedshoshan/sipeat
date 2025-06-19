@@ -48,5 +48,28 @@
       "submit": "إرسال الرسالة"
     }
   },
-  "backToTop": "العودة إلى الأعلى"
+  "backToTop": "العودة إلى الأعلى",
+  "requestPage": {
+    "title": "اطلب مشروبك المفضل",
+    "backToHome": "العودة إلى الصفحة الرئيسية"
+  },
+  "requestForm": {
+    "title": "طلب مشروب",
+    "customerName": "اسمك*",
+    "customerNamePlaceholder": "أدخل اسمك",
+    "drinkName": "اسم المشروب*",
+    "drinkNamePlaceholder": "أدخل اسم المشروب",
+    "selectMachine": "اختر الآلة*",
+    "selectMachinePlaceholder": "اختر آلة البيع",
+    "loadingMachines": "جاري تحميل الآلات...",
+    "submitButton": "إرسال الطلب",
+    "submittingButton": "جاري الإرسال...",
+    "errorLoadingMachines": "خطأ في تحميل الآلات. يرجى المحاولة مرة أخرى لاحقًا."
+  },
+  "statusPage": {
+    "title": "تم إرسال الطلب!",
+    "message": "تم إرسال طلب المشروب الخاص بك بنجاح. سنقوم بمعالجته في أقرب وقت ممكن.",
+    "submitAnother": "إرسال طلب آخر",
+    "returnHome": "العودة إلى الصفحة الرئيسية"
+  }
 } 

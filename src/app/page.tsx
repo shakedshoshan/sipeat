@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Messages } from "@/types/translate_type";
+import ContactUs from "@/components/ContactUs";
 
 
 export default function Home() {
@@ -122,40 +123,7 @@ export default function Home() {
 
       {/* Contact Section */}
       <section id="contact" className="flex flex-col items-center text-center py-16 px-4 bg-gradient-to-br from-[#2563eb] via-[#38bdf8] to-[#6ee7b7] text-white">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-4">{messages.contact.title}</h2>
-        <p className="mb-6 max-w-md">{messages.contact.description}</p>
-        <form className="flex flex-col gap-4 w-full max-w-sm mx-auto bg-white/10 p-6 rounded-xl shadow">
-          <input
-            type="text"
-            placeholder={messages.contact.form.name}
-            className="px-4 py-2 rounded bg-white text-[#2563eb] placeholder-[#38bdf8] focus:outline-none"
-            required
-          />
-          <input
-            type="email"
-            placeholder={messages.contact.form.email}
-            className="px-4 py-2 rounded bg-white text-[#2563eb] placeholder-[#38bdf8] focus:outline-none"
-            required
-          />
-          <input
-            type="tel"
-            placeholder={messages.contact.form.phone}
-            className="px-4 py-2 rounded bg-white text-[#2563eb] placeholder-[#38bdf8] focus:outline-none"
-            required
-          />
-          <textarea
-            placeholder={messages.contact.form.message}
-            className="px-4 py-2 rounded bg-white text-[#2563eb] placeholder-[#38bdf8] focus:outline-none"
-            rows={3}
-            required
-          />
-          <button
-            type="submit"
-            className="bg-[#facc15] text-[#2563eb] font-bold px-6 py-2 rounded-full shadow hover:bg-[#ffe066] transition"
-          >
-            {messages.contact.form.submit}
-          </button>
-        </form>
+        <ContactUs messages={messages} />
       </section>
 
       {/* Back to Top Button */}

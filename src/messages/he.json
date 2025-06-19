@@ -48,5 +48,28 @@
       "submit": "שלח הודעה"
     }
   },
-  "backToTop": "חזרה למעלה"
+  "backToTop": "חזרה למעלה",
+  "requestPage": {
+    "title": "הזמן את המשקה המועדף עליך",
+    "backToHome": "חזרה לדף הבית"
+  },
+  "requestForm": {
+    "title": "הזמן משקה",
+    "customerName": "השם שלך*",
+    "customerNamePlaceholder": "הכנס את שמך",
+    "drinkName": "שם המשקה*",
+    "drinkNamePlaceholder": "הכנס את שם המשקה",
+    "selectMachine": "בחר מכונה*",
+    "selectMachinePlaceholder": "בחר מכונת ממכר",
+    "loadingMachines": "טוען מכונות...",
+    "submitButton": "שלח בקשה",
+    "submittingButton": "שולח...",
+    "errorLoadingMachines": "שגיאה בטעינת המכונות. אנא נסה שוב מאוחר יותר."
+  },
+  "statusPage": {
+    "title": "הבקשה נשלחה!",
+    "message": "בקשת המשקה שלך נשלחה בהצלחה. אנו נטפל בה בהקדם האפשרי.",
+    "submitAnother": "שלח בקשה נוספת",
+    "returnHome": "חזרה לדף הבית"
+  }
 } 

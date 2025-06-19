@@ -48,5 +48,28 @@
       "submit": "Отправить сообщение"
     }
   },
-  "backToTop": "Наверх"
+  "backToTop": "Наверх",
+  "requestPage": {
+    "title": "Заказать любимый напиток",
+    "backToHome": "Вернуться на главную"
+  },
+  "requestForm": {
+    "title": "Заказать напиток",
+    "customerName": "Ваше имя*",
+    "customerNamePlaceholder": "Введите ваше имя",
+    "drinkName": "Название напитка*",
+    "drinkNamePlaceholder": "Введите название напитка",
+    "selectMachine": "Выберите аппарат*",
+    "selectMachinePlaceholder": "Выберите торговый аппарат",
+    "loadingMachines": "Загрузка аппаратов...",
+    "submitButton": "Отправить запрос",
+    "submittingButton": "Отправка...",
+    "errorLoadingMachines": "Ошибка загрузки аппаратов. Пожалуйста, попробуйте позже."
+  },
+  "statusPage": {
+    "title": "Запрос отправлен!",
+    "message": "Ваш запрос на напиток успешно отправлен. Мы обработаем его как можно скорее.",
+    "submitAnother": "Отправить еще один запрос",
+    "returnHome": "Вернуться на главную"
+  }
 } 

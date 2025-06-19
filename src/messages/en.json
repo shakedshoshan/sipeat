@@ -48,5 +48,28 @@
       "submit": "Send Message"
     }
   },
-  "backToTop": "Back to top"
+  "backToTop": "Back to top",
+  "requestPage": {
+    "title": "Request Your Favorite Drink",
+    "backToHome": "Back to Home"
+  },
+  "requestForm": {
+    "title": "Request a Drink",
+    "customerName": "Your Name*",
+    "customerNamePlaceholder": "Enter your name",
+    "drinkName": "Drink Name*",
+    "drinkNamePlaceholder": "Enter drink name",
+    "selectMachine": "Select Machine*",
+    "selectMachinePlaceholder": "Select a vending machine",
+    "loadingMachines": "Loading machines...",
+    "submitButton": "Submit Request",
+    "submittingButton": "Submitting...",
+    "errorLoadingMachines": "Error loading machines. Please try again later."
+  },
+  "statusPage": {
+    "title": "Request Submitted!",
+    "message": "Your drink request has been successfully submitted. We'll process it as soon as possible.",
+    "submitAnother": "Submit Another Request",
+    "returnHome": "Return to Home"
+  }
 } 

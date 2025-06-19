@@ -1,11 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { DrinkRequestData } from "@/api/CreateRequest";
 import { useSupabaseQuery } from "@/hooks/useSupabase";
 import { Machine } from "@/types/types_db";
+import { useEffect } from "react";
+import { Messages } from "@/types/translate_type";
 
 export default function RequestForm() {
+  const [messages, setMessages] = useState<Messages | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
   const [formData, setFormData] = useState<DrinkRequestData>({
     customer_name: "",
     drink_name: "",
@@ -14,7 +20,24 @@ export default function RequestForm() {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<boolean>(false);
+
+  useEffect(() => {
+    const loadTranslations = async () => {
+      try {
+        const language = localStorage.getItem('language') || 'he';
+        const translations = await import(`@/messages/${language}.json`);
+        setMessages(translations.default);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Failed to load translations:", error);
+        const translations = await import('@/messages/he.json');
+        setMessages(translations.default);
+        setIsLoading(false);
+      }
+    };
+
+    loadTranslations();
+  }, []);
 
   // Fetch machines from Supabase
   const { data: machines, loading: loadingMachines, error: machinesError } = 
@@ -36,7 +59,6 @@ export default function RequestForm() {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
-    setSuccess(false);
 
     try {
       const response = await fetch("/api/requests", {
@@ -52,23 +74,21 @@ export default function RequestForm() {
         throw new Error(errorData.error || "Failed to submit drink request");
       }
 
-      // Reset form on success
-      setFormData({
-        customer_name: "",
-        drink_name: "",
-        machine: "",
-      });
-      setSuccess(true);
+      // Redirect to status page on success
+      router.push("/status");
     } catch (err) {
       setError(err instanceof Error ? err.message : "An unknown error occurred");
-    } finally {
       setIsSubmitting(false);
     }
   };
 
+  if (isLoading || !messages) {
+    return <div className="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md">Loading...</div>;
+  }
+
   return (
     <div className="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md">
-      <h2 className="text-2xl font-bold text-[#2563eb] mb-6">Request a Drink</h2>
+      <h2 className="text-2xl font-bold text-[#2563eb] mb-6">{messages.requestForm.title}</h2>
       
       {error && (
         <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4">
@@ -78,20 +98,14 @@ export default function RequestForm() {
       
       {machinesError && (
         <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4">
-          Error loading machines. Please try again later.
-        </div>
-      )}
-      
-      {success && (
-        <div className="bg-green-50 text-green-600 p-3 rounded-lg mb-4">
-          Drink request submitted successfully!
+          {messages.requestForm.errorLoadingMachines}
         </div>
       )}
       
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="customer_name" className="block text-sm font-medium text-gray-700 mb-1">
-            Your Name*
+            {messages.requestForm.customerName}
           </label>
           <input
             type="text"
@@ -101,13 +115,13 @@ export default function RequestForm() {
             onChange={handleChange}
             required
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38bdf8]"
-            placeholder="Enter your name"
+            placeholder={messages.requestForm.customerNamePlaceholder}
           />
         </div>
         
         <div className="mb-4">
           <label htmlFor="drink_name" className="block text-sm font-medium text-gray-700 mb-1">
-            Drink Name*
+            {messages.requestForm.drinkName}
           </label>
           <input
             type="text"
@@ -117,13 +131,13 @@ export default function RequestForm() {
             onChange={handleChange}
             required
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38bdf8]"
-            placeholder="Enter drink name"
+            placeholder={messages.requestForm.drinkNamePlaceholder}
           />
         </div>
         
         <div className="mb-4">
           <label htmlFor="machine" className="block text-sm font-medium text-gray-700 mb-1">
-            Select Machine*
+            {messages.requestForm.selectMachine}
           </label>
           <select
             id="machine"
@@ -134,7 +148,7 @@ export default function RequestForm() {
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38bdf8]"
             disabled={loadingMachines || !machines}
           >
-            <option value="">Select a vending machine</option>
+            <option value="">{messages.requestForm.selectMachinePlaceholder}</option>
             {machines?.map((machine) => (
               <option key={machine.id} value={machine.id}>
                 {machine.name} - {machine.city}, {machine.country}
@@ -142,7 +156,7 @@ export default function RequestForm() {
             ))}
           </select>
           {loadingMachines && (
-            <p className="text-sm text-gray-500 mt-1">Loading machines...</p>
+            <p className="text-sm text-gray-500 mt-1">{messages.requestForm.loadingMachines}</p>
           )}
         </div>
         
@@ -155,7 +169,7 @@ export default function RequestForm() {
               : "bg-[#2563eb] hover:bg-[#1d4ed8]"
           } transition-colors`}
         >
-          {isSubmitting ? "Submitting..." : "Submit Request"}
+          {isSubmitting ? messages.requestForm.submittingButton : messages.requestForm.submitButton}
         </button>
       </form>
     </div>
