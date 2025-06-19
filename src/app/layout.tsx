@@ -1,8 +1,10 @@
-import type { Metadata } from "next";
+'use client';
+
 import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useEffect } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,26 +16,29 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Sipeat",
-  description: "Sipeat is a platform that allows you to request a drink from a vending machine near you.",
-  icons: {
-    icon: "/SipEat.png",
-  },
-  openGraph: {
-    title: "Sipeat",
-    description: "Sipeat is a platform that allows you to request a drink from a vending machine near you.",
-    images: "/SipEat.png",
-  },
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  useEffect(() => {
+    // Get the saved language from localStorage on component mount
+    const savedLanguage = localStorage.getItem('language') || 'he';
+    
+    // Apply RTL direction for Hebrew and Arabic languages
+    document.documentElement.dir = ['he', 'ar'].includes(savedLanguage) ? 'rtl' : 'ltr';
+  }, []);
+
   return (
-    <html lang="en">
+    <html>
+      <head>
+        <title>Sipeat</title>
+        <meta name="description" content="Sipeat is a platform that allows you to request a drink from a vending machine near you." />
+        <link rel="icon" href="/SipEat.png" />
+        <meta property="og:title" content="Sipeat" />
+        <meta property="og:description" content="Sipeat is a platform that allows you to request a drink from a vending machine near you." />
+        <meta property="og:image" content="/SipEat.png" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
