@@ -8,6 +8,8 @@ CREATE TABLE public.contact (
   email text NOT NULL,
   phone bigint NOT NULL,
   message text NOT NULL,
+  company_name text,
+  mechine_location text,
   CONSTRAINT contact_pkey PRIMARY KEY (id)
 );
 CREATE TABLE public.machine (
@@ -16,6 +18,7 @@ CREATE TABLE public.machine (
   country text NOT NULL,
   city text NOT NULL,
   street text,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT machine_pkey PRIMARY KEY (id)
 );
 CREATE TABLE public.request (
@@ -23,6 +26,7 @@ CREATE TABLE public.request (
   customer_name text NOT NULL,
   drink_name text NOT NULL,
   machine uuid,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
   CONSTRAINT request_pkey PRIMARY KEY (id),
   CONSTRAINT request_machine_fkey FOREIGN KEY (machine) REFERENCES public.machine(id)
 );

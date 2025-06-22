@@ -81,6 +81,8 @@ export interface Messages {
         name: string;
         email: string;
         phone: string;
+        company_name: string;
+        mechine_location: string;
         message: string;
         submit: string;
         error?: string;

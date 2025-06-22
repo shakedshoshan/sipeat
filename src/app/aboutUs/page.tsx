@@ -2,7 +2,6 @@
 
 import AboutUs from "@/components/AboutUs";
 import Link from "next/link";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useEffect, useState } from "react";
 import { Messages } from "@/types/translate_type";
 
@@ -33,16 +32,23 @@ export default function AboutUsPage() {
     }
 
     return (
-        <div className="flex flex-col items-center text-center py-16 px-4 bg-white">
-            <AboutUs />
+        <div className="flex flex-col items-center text-center py-16 px-4 bg-white relative">
+            {/* <div className="absolute top-4 right-4">
+                <LanguageSwitcher />
+            </div> */}
+            <div className="absolute top-4 right-4">
+              <AboutUs />
+            </div>
 
             {/* Contact Button */}
-      <div className="mt-8 text-center">
-        <Link href="/#contact" 
-              className="inline-block bg-[#2563eb] text-white font-bold px-8 py-3 rounded-full shadow hover:bg-[#1d4ed8] transition">
-          {messages.navigation.contactUs}
-        </Link>
-      </div>
+            <div className="mt-8 text-center">
+                <Link 
+                    href="/#contact" 
+                    className="inline-block bg-[#2563eb] text-white font-bold px-8 py-3 rounded-full shadow hover:bg-[#1d4ed8] transition"
+                >
+                    {messages.navigation.contactUs}
+                </Link>
+            </div>
         </div>
-    )
+    );
 }

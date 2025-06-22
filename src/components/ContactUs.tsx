@@ -63,6 +63,18 @@ export default function ContactUs({ messages }: { messages: Messages }) {
           className="px-4 py-2 rounded bg-white text-[#2563eb] placeholder-[#38bdf8] focus:outline-none"
           required
         />
+        <input
+          type="text"
+          name="company_name"
+          placeholder={messages.contact.form.company_name}
+          className="px-4 py-2 rounded bg-white text-[#2563eb] placeholder-[#38bdf8] focus:outline-none"
+        />
+        <input
+          type="text"
+          name="mechine_location"
+          placeholder={messages.contact.form.mechine_location}
+          className="px-4 py-2 rounded bg-white text-[#2563eb] placeholder-[#38bdf8] focus:outline-none"
+        />
         <textarea
           name="message"
           placeholder={messages.contact.form.message}

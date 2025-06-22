@@ -1,7 +1,6 @@
 "use client";
 
 import RequestForm from "@/components/RequestForm";
-import Link from "next/link";
 import { useEffect, useState, Suspense } from "react";
 import { Messages } from "@/types/translate_type";
 

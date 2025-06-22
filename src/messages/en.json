@@ -82,6 +82,8 @@
       "name": "Your Name",
       "email": "Your Email",
       "phone": "Your Phone Number",
+      "company_name": "Your Company Name",
+      "mechine_location": "Your Machine Location",
       "message": "Your Message",
       "submit": "Send Message"
     }
