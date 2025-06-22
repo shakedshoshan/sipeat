@@ -1,7 +1,9 @@
 # SipEat
 
+## Visit website: https://sipeat.app/
+
 ## Project Overview
-SipEat is a modern web application built with Next.js, designed to streamline interactions with food and beverage services. It provides a seamless user experience for managing requests, machines, and contacts.
+Built as a freelance project for SipEat, a company specializing in vending machines, this web application streamlines interactions with food and beverage services. It allows users to create contacts for requesting machine placements and customize beverage selections for specific machines, enhancing the experience for customers who purchase from them.
 
 ![sipeatImage1](https://github.com/user-attachments/assets/4b12ca7f-950b-453a-a4a2-4b9c8841712a) ![sipeatImage2](https://github.com/user-attachments/assets/4953ad93-89a4-440e-a88e-2d189fbe6e08) 
 
