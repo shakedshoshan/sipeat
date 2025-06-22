@@ -1,12 +1,18 @@
 import { Messages } from "@/types/translate_type";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createContact } from "@/api/CreateContact";
 
 export default function ContactUs({ messages }: { messages: Messages }) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [language, setLanguage] = useState<string>("he"); // Default to Hebrew
+
+  useEffect(() => {
+    const storedLanguage = localStorage.getItem("language") || "he";
+    setLanguage(storedLanguage);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -63,6 +69,7 @@ export default function ContactUs({ messages }: { messages: Messages }) {
           name="phone"
           placeholder={messages.contact.form.phone}
           className="px-4 py-2 rounded bg-white text-[#2563eb] placeholder-[#38bdf8] focus:outline-none"
+          dir={language === "he" || language === "ar" ? "rtl" : "ltr"}
           required
         />
         <input
