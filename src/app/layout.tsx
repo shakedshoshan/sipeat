@@ -37,7 +37,7 @@ export default function RootLayout({
         <link rel="icon" href="/SipEat.svg" />
         <meta property="og:title" content="Sipeat" />
         <meta property="og:description" content="Sipeat is a platform that allows you to request a drink from a vending machine near you." />
-        <meta property="og:image" content="/SipEat.svg" />
+        <meta property="og:image" content="https://ibb.co/FqCS2MLp" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
