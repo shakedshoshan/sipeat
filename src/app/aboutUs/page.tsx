@@ -42,12 +42,7 @@ export default function AboutUsPage() {
 
             {/* Contact Button */}
             <div className="mt-8 text-center">
-                <Link 
-                    href="/#contact" 
-                    className="inline-block bg-[#2563eb] text-white font-bold px-8 py-3 rounded-full shadow hover:bg-[#1d4ed8] transition"
-                >
-                    {messages.navigation.contactUs}
-                </Link>
+                
             </div>
         </div>
     );
