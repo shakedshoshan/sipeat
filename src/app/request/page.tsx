@@ -44,7 +44,7 @@ function RequestContent() {
       </div>
       <div className="max-w-4xl mx-auto">
         <Link href="/" className="text-blue-500 hover:text-blue-600 flex items-center justify-center bg-white rounded-md p-2 border-2 border-blue-100 hover:bg-blue-100">
-          {messages.requestPage.backToRequest}
+          {messages.requestPage.backToHome}
         </Link>
       </div>
     </div>
