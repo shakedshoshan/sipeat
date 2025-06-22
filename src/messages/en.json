@@ -41,6 +41,40 @@
   "moreAboutUs": {
     "title": "More About Our Service"
   },
+  "aboutUs": {
+    "title": "About Our Service",
+    "subtitle": "Premium vending solutions tailored to your environment and needs",
+    "machines": {
+      "title": "Our Machines",
+      "closedMachines": {
+        "title": "Closed Drink Machines",
+        "description": "Weather-resistant for outdoor locations"
+      },
+      "glassMachines": {
+        "title": "Glass Display Machines",
+        "description": "Elegant solutions for indoor spaces"
+      },
+      "combinedUnits": {
+        "title": "Combined Units",
+        "description": "Space-saving designs for compact areas"
+      }
+    },
+    "operationHours": {
+      "title": "Our Operation Hours",
+      "weekdays": {
+        "title": "Sunday - Thursday",
+        "hours": "8:00 AM - 7:00 PM"
+      },
+      "holidays": {
+        "title": "Friday & Holiday Eves",
+        "hours": "8:00 AM - 2:00 PM"
+      }
+    },
+    "uniqueService": {
+      "title": "Our Unique service",
+      "description": "We place a barcode on each machine, which when scanned leads to a special requests page, so that each customer can submit requests for products that are not in their machine. This way, we modify and adapt our products for each machine individually according to customer demand. This is to maximize the customer experience."
+    }
+  },
   "contact": {
     "title": "Contact Us",
     "description": "Interested in our services? Fill out the form below and we'll get back to you as soon as possible!",

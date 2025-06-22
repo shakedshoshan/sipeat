@@ -1,4 +1,7 @@
 export interface Messages {
+    navigation: {
+      contactUs: string;
+    };
     hero: {
       slogan: string;
       learnMore: string;
@@ -36,6 +39,40 @@ export interface Messages {
     };
     moreAboutUs: {
       title: string;
+    };
+    aboutUs: {
+      title: string;
+      subtitle: string;
+      machines: {
+        title: string;
+        closedMachines: {
+          title: string;
+          description: string;
+        };
+        glassMachines: {
+          title: string;
+          description: string;
+        };
+        combinedUnits: {
+          title: string;
+          description: string;
+        };
+      };
+      operationHours: {
+        title: string;
+        weekdays: {
+          title: string;
+          hours: string;
+        };
+        holidays: {
+          title: string;
+          hours: string;
+        };
+      };
+      uniqueService: {
+        title: string;
+        description: string;
+      };
     };
     contact: {
       title: string;
