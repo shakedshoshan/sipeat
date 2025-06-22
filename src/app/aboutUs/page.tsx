@@ -1,7 +1,6 @@
 "use client";
 
 import AboutUs from "@/components/AboutUs";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Messages } from "@/types/translate_type";
 
@@ -38,11 +37,6 @@ export default function AboutUsPage() {
             </div> */}
             <div className="absolute top-4 right-4">
               <AboutUs />
-            </div>
-
-            {/* Contact Button */}
-            <div className="mt-8 text-center">
-                
             </div>
         </div>
     );
