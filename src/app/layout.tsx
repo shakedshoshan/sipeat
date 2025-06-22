@@ -34,7 +34,7 @@ export default function RootLayout({
       <head>
         <title>Sipeat</title>
         <meta name="description" content="Sipeat is a platform that allows you to request a drink from a vending machine near you." />
-        <link rel="icon" href="/SipEat.png" />
+        <link rel="icon" href="/SipEat.svg" />
         <meta property="og:title" content="Sipeat" />
         <meta property="og:description" content="Sipeat is a platform that allows you to request a drink from a vending machine near you." />
         <meta property="og:image" content="/SipEat.png" />
