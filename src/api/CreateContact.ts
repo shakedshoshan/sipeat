@@ -4,6 +4,8 @@ export type ContactData = {
   name: string;
   email: string;
   phone: number;
+  company_name?: string | null;
+  mechine_location?: string | null;
   message: string;
 };
 
@@ -27,6 +29,8 @@ export async function createContact(contactData: ContactData) {
           name: contactData.name,
           email: contactData.email,
           phone: contactData.phone,
+          company_name: contactData.company_name || null,
+          mechine_location: contactData.mechine_location || null,
           message: contactData.message,
         }
       ])

@@ -18,6 +18,8 @@ export default function ContactUs({ messages }: { messages: Messages }) {
       name: formData.get("name") as string,
       email: formData.get("email") as string,
       phone: Number(formData.get("phone")),
+      company_name: formData.get("company_name") as string,
+      mechine_location: formData.get("mechine_location") as string,
       message: formData.get("message") as string,
     };
 

@@ -24,9 +24,9 @@ export interface Contact {
   name: string;
   email: string;
   phone: string;
-  message: string;
   company_name?: string | null;
   mechine_location?: string | null;
+  message: string;
 }
 
 // Filter operator types for queries
