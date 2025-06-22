@@ -55,7 +55,8 @@
   "backToTop": "Back to top",
   "requestPage": {
     "title": "Request Your Favorite Drink",
-    "backToHome": "Back to Home"
+    "backToHome": "Back to Home",
+    "backToRequest": "Another Request"
   },
   "requestForm": {
     "title": "Request a Drink",

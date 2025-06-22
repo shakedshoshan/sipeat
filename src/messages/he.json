@@ -55,7 +55,8 @@
   "backToTop": "חזרה למעלה",
   "requestPage": {
     "title": "הזמן את המשקה המועדף עליך",
-    "backToHome": "חזרה לדף הבית"
+    "backToHome": "חזרה לדף הבית",
+    "backToRequest": "בקשה נוספת"
   },
   "requestForm": {
     "title": "הזמן משקה",

@@ -1,97 +1,99 @@
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
 
 const AboutUs = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="text-center mb-10">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-[#2563eb]">More About Our Service</h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">We provide high-quality vending machine solutions tailored to your specific needs and environment.</p>
+    <div className="max-w-4xl mx-auto px-4 py-12">
+      {/* Hero Section */}
+      <div className="text-center mb-16">
+        <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-[#2563eb] bg-clip-text bg-gradient-to-r from-[#2563eb] to-[#6ee7b7]">
+          About Our Service
+        </h1>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          Premium vending solutions tailored to your environment and needs
+        </p>
       </div>
 
-      {/* Types of Machines */}
-      <section className="mb-10 bg-white rounded-xl shadow-lg p-6 border-t-4 border-[#38bdf8] hover:shadow-xl transition-shadow">
-        <div className="flex items-center mb-4">
-          <Image src="/icons/machine.png" alt="Vending Machines" width={40} height={40} className="mr-3" />
-          <h3 className="text-xl font-bold text-[#2563eb]">Types of Machines We Place</h3>
-        </div>
-        
-        <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-          <div className="bg-[#f3f4f6] rounded-lg p-5 hover:bg-[#e5e7eb] transition-colors">
-            <h4 className="font-bold text-[#2563eb] mb-2">Closed Drink Machines</h4>
-            <p className="text-gray-700">Perfect for outdoor locations in the open air.</p>
-            <p className="text-gray-600 mt-2 text-sm italic">Example: Weather-resistant machines for parks or stadiums.</p>
+      {/* Features Grid */}
+      <div className="grid md:grid-cols-2 gap-8 mb-16">
+        {/* Types of Machines */}
+        <div className="bg-white rounded-2xl shadow-xl p-8 border-l-4 border-[#38bdf8] transform transition-all hover:scale-[1.02]">
+          <div className="flex items-center mb-6">
+            <div className="p-3 rounded-lg bg-[#38bdf8]/10 mr-4">
+              <Image src="/icons/machine.png" alt="Machines" width={32} height={32} />
+            </div>
+            <h3 className="text-xl font-bold text-[#2563eb]">Our Machines</h3>
           </div>
           
-          <div className="bg-[#f3f4f6] rounded-lg p-5 hover:bg-[#e5e7eb] transition-colors">
-            <h4 className="font-bold text-[#2563eb] mb-2">Glass Display Machines</h4>
-            <p className="text-gray-700">Suitable for closed locations inside the workplace.</p>
-            <p className="text-gray-600 mt-2 text-sm italic">Example: Transparent-front machines for offices or lobbies.</p>
+          <div className="space-y-4">
+            <div className="p-4 rounded-lg bg-gradient-to-r from-[#f3f4f6] to-white">
+              <h4 className="font-semibold text-[#2563eb]">Closed Drink Machines</h4>
+              <p className="text-gray-600 mt-1">Weather-resistant for outdoor locations</p>
+            </div>
+            
+            <div className="p-4 rounded-lg bg-gradient-to-r from-[#f3f4f6] to-white">
+              <h4 className="font-semibold text-[#2563eb]">Glass Display Machines</h4>
+              <p className="text-gray-600 mt-1">Elegant solutions for indoor spaces</p>
+            </div>
+            
+            <div className="p-4 rounded-lg bg-gradient-to-r from-[#f3f4f6] to-white">
+              <h4 className="font-semibold text-[#2563eb]">Combined Units</h4>
+              <p className="text-gray-600 mt-1">Space-saving designs for compact areas</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Operation Times Section */}
+        <div className="bg-white rounded-xl shadow-sm p-8 mb-12 border-l-4 border-[#6ee7b7]">
+          <div className="flex items-center mb-6">
+            <div className="p-3 rounded-lg bg-[#6ee7b7]/10 mr-4">
+              <Image src="/icons/service.png" alt="Operation Hours" width={32} height={32} />
+            </div>
+            <h3 className="text-xl font-bold text-[#2563eb]">Our Operation Hours</h3>
           </div>
           
-          <div className="bg-[#f3f4f6] rounded-lg p-5 hover:bg-[#e5e7eb] transition-colors">
-            <h4 className="font-bold text-[#2563eb] mb-2">Combined Machines</h4>
-            <p className="text-gray-700">Save space. Perfect for closed and small locations.</p>
-            <p className="text-gray-600 mt-2 text-sm italic">Example: Compact units for small break rooms or waiting areas.</p>
+          <div className="space-y-4">
+            <div className="flex items-center">
+              <div className="w-3 h-3 rounded-full bg-[#6ee7b7] mr-3"></div>
+              <div>
+                <p className="font-medium text-gray-800">Sunday - Thursday</p>
+                <p className="text-gray-600">8:00 AM - 7:00 PM</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center">
+              <div className="w-3 h-3 rounded-full bg-[#facc15] mr-3"></div>
+              <div>
+                <p className="font-medium text-gray-800">Friday & Holiday Eves</p>
+                <p className="text-gray-600">8:00 AM - 2:00 PM</p>
+              </div>
+            </div>
+          </div>
+          
+       
+        </div>
+      </div>
+
+      {/* Unique Feature */}
+      <div className="bg-white rounded-2xl shadow-xl p-8 mb-16 border-l-4 border-[#facc15] transform transition-all hover:scale-[1.01]">
+        <div className="flex flex-col md:flex-row items-center">
+          <div className="md:w-1/3 mb-6 md:mb-0 md:pr-8">
+            <div className="p-4 rounded-xl bg-[#facc15]/10 flex justify-center">
+              <Image src="/icons/send.png" alt="Unique Feature" width={120} height={120} />
+            </div>
+          </div>
+          
+          <div className="md:w-2/3">
+            <h3 className="text-2xl font-bold text-[#2563eb] mb-4">Our Unique service</h3>
+            <p className="text-gray-700 mb-6">
+            We place a barcode on each machine, which when scanned leads to a special requests page, so that each customer can submit requests for products that are not in their machine. This way, we modify and adapt our products for each machine individually according to customer demand. This is to maximize the customer experience.            </p>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Customer Service */}
-      <section className="mb-10 bg-white rounded-xl shadow-lg p-6 border-t-4 border-[#6ee7b7] hover:shadow-xl transition-shadow">
-        <div className="flex items-center mb-4">
-          <Image src="/icons/service.png" alt="Customer Service" width={40} height={40} className="mr-3" />
-          <h3 className="text-xl font-bold text-[#2563eb]">Customer Service – Response Times</h3>
-        </div>
+      {/* CTA */}
+      <div className="text-center">
         
-        <div className="bg-[#f3f4f6] rounded-lg p-5 mt-4">
-          <div className="flex flex-col sm:flex-row sm:justify-around">
-            <div className="mb-4 sm:mb-0">
-              <h4 className="font-semibold text-[#2563eb] mb-2">Weekdays</h4>
-              <p className="text-gray-700 text-lg">Sun-Thu: 8:00-19:00</p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-[#2563eb] mb-2">Weekends & Holidays</h4>
-              <p className="text-gray-700 text-lg">Friday and holiday eves: 8:00-14:00</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Unique Service */}
-      <section className="mb-10 bg-white rounded-xl shadow-lg p-6 border-t-4 border-[#facc15] hover:shadow-xl transition-shadow">
-        <div className="flex items-center mb-4">
-          <Image src="/icons/support_question.png" alt="Unique Service" width={40} height={40} className="mr-3" />
-          <h3 className="text-xl font-bold text-[#2563eb]">A Unique Service for Us</h3>
-        </div>
-        
-        <div className="bg-[#f3f4f6] rounded-lg p-5 mt-4">
-          <p className="text-gray-700 text-lg font-medium">Customer survey and placing items according to demand.</p>
-          <div className="flex items-center mt-4 p-4 bg-white rounded-lg border border-gray-200">
-            <div className="mr-4 hidden sm:block">
-              <Image src="/icons/send.png" alt="Barcode" width={60} height={60} />
-            </div>
-            <div>
-              <p className="text-gray-700">
-                We place a barcode on each machine. Scanning it leads to a special requests page where customers can submit requests for unavailable products. This helps us add them if possible.
-              </p>
-              <Link href="/request" className="text-[#2563eb] font-medium mt-2 inline-block hover:underline">
-                View Request Page →
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Back to Home */}
-      <div className="text-center mt-12">
-        <Link
-          href="/"
-          className="inline-flex items-center bg-[#2563eb] text-white font-bold px-6 py-3 rounded-full shadow hover:bg-[#1d4ed8] transition"
-        >
-          <span className="mr-2">←</span> Back to Home
-        </Link>
       </div>
     </div>
   );

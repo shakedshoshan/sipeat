@@ -52,7 +52,8 @@
   "backToTop": "العودة إلى الأعلى",
   "requestPage": {
     "title": "اطلب مشروبك المفضل",
-    "backToHome": "العودة إلى الصفحة الرئيسية"
+    "backToHome": "العودة إلى الصفحة الرئيسية",
+    "backToRequest": "طلب آخر"
   },
   "requestForm": {
     "title": "طلب مشروب",

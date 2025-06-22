@@ -2,10 +2,10 @@
 
 import RequestForm from "@/components/RequestForm";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { Messages } from "@/types/translate_type";
 
-export default function RequestPage() {
+function RequestContent() {
   const [messages, setMessages] = useState<Messages | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -44,9 +44,17 @@ export default function RequestPage() {
       </div>
       <div className="max-w-4xl mx-auto">
         <Link href="/" className="text-blue-500 hover:text-blue-600 flex items-center justify-center bg-white rounded-md p-2 border-2 border-blue-100 hover:bg-blue-100">
-          {messages.requestPage.backToHome}
+          {messages.requestPage.backToRequest}
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function RequestPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+      <RequestContent />
+    </Suspense>
   );
 } 

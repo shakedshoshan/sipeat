@@ -52,7 +52,8 @@
   "backToTop": "Наверх",
   "requestPage": {
     "title": "Заказать любимый напиток",
-    "backToHome": "Вернуться на главную"
+    "backToHome": "Вернуться на главную",
+    "backToRequest": "Еще один запрос"
   },
   "requestForm": {
     "title": "Заказать напиток",

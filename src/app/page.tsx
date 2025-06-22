@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Messages } from "@/types/translate_type";
 import ContactUs from "@/components/ContactUs";
-import AboutUs from "@/components/AboutUs";
 
 
 export default function Home() {
