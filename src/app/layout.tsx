@@ -5,6 +5,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useEffect } from "react";
+import Image from "next/image";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,7 +48,7 @@ export default function RootLayout({
       <nav className="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur shadow-sm border-b border-[#38bdf8] ">
         <div className="max-w-4xl mx-auto flex justify-between items-center px-4 py-2 ">
           <Link href="/">
-          <span className="font-extrabold text-[#2563eb] text-2xl tracking-tight ">Sipeat</span>
+            <Image src="/sipeat_short.png" alt="Sipeat" width={100} height={100} />
           </Link>
           <LanguageSwitcher />
         </div>
