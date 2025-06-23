@@ -6,11 +6,12 @@ import { DrinkRequestData } from "@/api/CreateRequest";
 import { useSupabaseQuery } from "@/hooks/useSupabase";
 import { Machine } from "@/types/types_db";
 import { Messages } from "@/types/translate_type";
-import { drinksList } from "@/types/drinks_list";
+import { drinksList, Drink } from "@/types/drinks_list";
 
 export default function RequestForm() {
   const [messages, setMessages] = useState<Messages | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [language, setLanguage] = useState<string>('he');
   const router = useRouter();
   const [formData, setFormData] = useState<DrinkRequestData>({
     customer_name: "",
@@ -24,16 +25,19 @@ export default function RequestForm() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Filter drinks based on search term
+  // Filter drinks based on search term and current language
   const filteredDrinks = drinksList.filter(drink => 
-    drink.name.toLowerCase().includes(searchTerm.toLowerCase())
+    drink.translations[language as keyof typeof drink.translations]
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
   );
 
   useEffect(() => {
     const loadTranslations = async () => {
       try {
-        const language = localStorage.getItem('language') || 'he';
-        const translations = await import(`@/messages/${language}.json`);
+        const currentLanguage = localStorage.getItem('language') || 'he';
+        setLanguage(currentLanguage);
+        const translations = await import(`@/messages/${currentLanguage}.json`);
         setMessages(translations.default);
         setIsLoading(false);
       } catch (error) {
@@ -82,12 +86,13 @@ export default function RequestForm() {
     setIsDropdownOpen(true);
   };
 
-  const handleDrinkSelect = (drinkName: string) => {
+  const handleDrinkSelect = (drink: Drink) => {
+    // Store the English name in the database but display the localized name
     setFormData((prev) => ({
       ...prev,
-      drink_name: drinkName,
+      drink_name: drink.translations.en,
     }));
-    setSearchTerm(drinkName);
+    setSearchTerm(drink.translations[language as keyof typeof drink.translations]);
     setIsDropdownOpen(false);
   };
 
@@ -180,15 +185,15 @@ export default function RequestForm() {
           />
           
           {isDropdownOpen && (
-            <div className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm">
+            <div className="absolute z-10 mt-1 w-72 bg-white shadow-lg max-h-60 rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm">
               {filteredDrinks.length > 0 ? (
-                filteredDrinks.map((drink: { name: string }) => (
+                filteredDrinks.map((drink) => (
                   <div
-                    key={drink.name}
-                    className="cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-gray-100"
-                    onClick={() => handleDrinkSelect(drink.name)}
+                    key={drink.id}
+                    className="cursor-pointer select-none relative py-2 pl-3 pr-3 hover:bg-gray-100"
+                    onClick={() => handleDrinkSelect(drink)}
                   >
-                    {drink.name}
+                    {drink.translations[language as keyof typeof drink.translations]}
                   </div>
                 ))
               ) : (
