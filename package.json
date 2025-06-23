@@ -6,10 +6,18 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "kafka:up": "docker-compose up -d",
+    "kafka:down": "docker-compose down",
+    "kafka:create-topics": "node create-topics.js",
+    "kafka:worker": "node kafka-worker.js",
+    "worker:dev": "node -r ts-node/register -r tsconfig-paths/register src/workers/kafka-worker.ts",
+    "worker:build": "tsc -p tsconfig.worker.json",
+    "worker:start": "node dist/workers/kafka-worker.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.0",
+    "kafkajs": "^2.2.4",
     "next": "15.3.3",
     "next-intl": "^4.1.0",
     "react": "^19.0.0",
@@ -24,6 +32,17 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5"
+  },
+  "browser": {
+    "net": false,
+    "tls": false,
+    "fs": false,
+    "dns": false,
+    "child_process": false,
+    "path": false,
+    "os": false
   }
 }

@@ -1,5 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import { DrinkRequest } from '@/types/types_db';
+import { sendMessage } from '@/lib/kafka';
+import { KafkaTopic, createKafkaEvent, RequestCreatedEvent } from '@/types/kafka-events';
 
 export type DrinkRequestData = Omit<DrinkRequest, 'id'>;
 
@@ -32,7 +34,42 @@ export async function createDrinkRequest(requestData: DrinkRequestData) {
       throw error;
     }
 
-    return data?.[0] as DrinkRequest || null;
+    const createdRequest = data?.[0] as DrinkRequest;
+    
+    if (createdRequest) {
+      // Get machine details for the event
+      const { data: machineData } = await supabase
+        .from('machine')
+        .select('*')
+        .eq('id', createdRequest.machine)
+        .single();
+      
+      // Publish request created event to Kafka
+      const requestEvent: RequestCreatedEvent = {
+        id: createdRequest.id,
+        name: createdRequest.customer_name,
+        email: '', // Add these fields to your request table if needed
+        phone: '',
+        address: machineData?.street || '',
+        city: machineData?.city || '',
+        country: machineData?.country || '',
+        drinksList: [createdRequest.drink_name],
+        timestamp: new Date().toISOString(),
+      };
+      
+      const kafkaEvent = createKafkaEvent(KafkaTopic.REQUEST_CREATED, requestEvent);
+      await sendMessage(KafkaTopic.REQUEST_CREATED, kafkaEvent);
+      
+      // Also send a notification event
+      const notificationEvent = createKafkaEvent(KafkaTopic.NOTIFICATION, {
+        type: 'request',
+        message: `New drink request: ${createdRequest.drink_name} by ${createdRequest.customer_name}`,
+        timestamp: new Date().toISOString(),
+      });
+      await sendMessage(KafkaTopic.NOTIFICATION, notificationEvent);
+    }
+
+    return createdRequest || null;
   } catch (error) {
     console.error('Failed to create drink request:', error);
     return null;

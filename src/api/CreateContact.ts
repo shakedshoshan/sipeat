@@ -1,4 +1,6 @@
 import { supabase } from '@/lib/supabase';
+import { sendMessage } from '@/lib/kafka';
+import { KafkaTopic, createKafkaEvent, ContactCreatedEvent } from '@/types/kafka-events';
 
 export type ContactData = {
   name: string;
@@ -41,7 +43,43 @@ export async function createContact(contactData: ContactData) {
       throw error;
     }
 
-    return data?.[0] || null;
+    const createdContact = data?.[0];
+    
+    if (createdContact) {
+      // KAFKA INTEGRATION:
+      // After successfully creating a contact in the database,
+      // we publish events to Kafka to trigger asynchronous processing
+      
+      // 1. Create a contact event with the relevant data
+      // This follows the Event Sourcing pattern - capturing state changes as events
+      const contactEvent: ContactCreatedEvent = {
+        id: createdContact.id,
+        name: createdContact.name,
+        email: createdContact.email,
+        phone: createdContact.phone.toString(),
+        message: createdContact.message,
+        timestamp: new Date().toISOString(),
+      };
+      
+      // 2. Use the event factory to create a properly formatted Kafka event
+      const kafkaEvent = createKafkaEvent(KafkaTopic.CONTACT_CREATED, contactEvent);
+      
+      // 3. Publish the event to the contact-created topic
+      // This implements the Publisher part of the Publisher-Subscriber pattern
+      await sendMessage(KafkaTopic.CONTACT_CREATED, kafkaEvent);
+      
+      // 4. Also send a notification event to a separate topic
+      // This demonstrates how one action can trigger multiple events
+      const notificationEvent = createKafkaEvent(KafkaTopic.NOTIFICATION, {
+        type: 'contact',
+        message: `New contact submission from ${createdContact.name}`,
+        recipientEmail: 'shakedshoshan8@gmail.com', // Replace with actual admin email
+        timestamp: new Date().toISOString(),
+      });
+      await sendMessage(KafkaTopic.NOTIFICATION, notificationEvent);
+    }
+
+    return createdContact || null;
   } catch (error) {
     console.error('Failed to create contact submission:', error);
     return null;

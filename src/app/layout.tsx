@@ -6,6 +6,7 @@ import "./globals.css";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useEffect } from "react";
 import Image from "next/image";
+import { initializeKafka } from "@/lib/kafka";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +29,9 @@ export default function RootLayout({
     
     // Apply RTL direction for Hebrew and Arabic languages
     document.documentElement.dir = ['he', 'ar'].includes(savedLanguage) ? 'rtl' : 'ltr';
+    
+    // Initialize Kafka
+    initializeKafka().catch(console.error);
   }, []);
 
   return (

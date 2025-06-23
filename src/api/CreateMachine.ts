@@ -1,5 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import { Machine } from '@/types/types_db';
+import { sendMessage } from '@/lib/kafka';
+import { KafkaTopic, createKafkaEvent, MachineCreatedEvent } from '@/types/kafka-events';
 
 export type MachineData = Omit<Machine, 'id'>;
 
@@ -33,7 +35,35 @@ export async function createMachine(machineData: MachineData) {
       throw error;
     }
 
-    return data?.[0] as Machine || null;
+    const createdMachine = data?.[0] as Machine;
+    
+    if (createdMachine) {
+      // Publish machine created event to Kafka
+      const machineEvent: MachineCreatedEvent = {
+        id: createdMachine.id,
+        name: createdMachine.name,
+        address: createdMachine.street || '',
+        city: createdMachine.city,
+        country: createdMachine.country,
+        contactName: '', // Add these fields to your machine table if needed
+        contactEmail: '',
+        contactPhone: '',
+        timestamp: new Date().toISOString(),
+      };
+      
+      const kafkaEvent = createKafkaEvent(KafkaTopic.MACHINE_CREATED, machineEvent);
+      await sendMessage(KafkaTopic.MACHINE_CREATED, kafkaEvent);
+      
+      // Also send a notification event
+      const notificationEvent = createKafkaEvent(KafkaTopic.NOTIFICATION, {
+        type: 'machine',
+        message: `New machine registered: ${createdMachine.name} in ${createdMachine.city}, ${createdMachine.country}`,
+        timestamp: new Date().toISOString(),
+      });
+      await sendMessage(KafkaTopic.NOTIFICATION, notificationEvent);
+    }
+
+    return createdMachine || null;
   } catch (error) {
     console.error('Failed to create machine:', error);
     return null;
