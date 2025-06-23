@@ -6,6 +6,7 @@ import "./globals.css";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useEffect } from "react";
 import Image from "next/image";
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,6 +56,7 @@ export default function RootLayout({
       </nav>
       </div>
         {children}
+        <Analytics />
       </body>
     </html>
   );
