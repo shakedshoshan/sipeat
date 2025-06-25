@@ -158,6 +158,8 @@ class EventConsumer {
 
     await this.consumer!.run({
       eachMessage: async ({ topic, partition, message }: EachMessagePayload) => {
+        console.log(`Received message from topic ${topic}:`, message);
+        console.log(`partition: ${partition}`);
         try {
           // Ensure message has a value
           if (!message.value) {

@@ -6,9 +6,9 @@ import { createRequestCreatedHandler } from './handlers/RequestHandlers';
 import { createMachineCreatedHandler } from './handlers/MachineHandlers';
 
 class SipeatEventConsumer {
-  private contactConsumer: any; // Using any temporarily
-  private requestConsumer: any; // Using any temporarily
-  private machineConsumer: any; // Using any temporarily
+  private contactConsumer: any | null; // Using any temporarily
+  private requestConsumer: any | null; // Using any temporarily
+  private machineConsumer: any | null; // Using any temporarily
   private topics: any; // Store topics
 
   constructor() {

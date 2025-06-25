@@ -167,6 +167,7 @@ export async function sendKafkaEventNotification({
             stringValue = String(value);
           }
         } catch (err) {
+          console.error('Error converting value to string:', err);
           stringValue = 'Error: Could not convert value to string';
         }
       }

@@ -32,6 +32,7 @@ export abstract class RequestProcessor {
 
 export class InventoryValidationProcessor extends RequestProcessor {
   protected async canHandle(request: RequestCreatedEvent['data']): Promise<boolean> {
+    console.log(`📦 Validating inventory for ${request.drink_name} at machine ${request.machine_name}`);
     return true; // Always validate inventory
   }
 
@@ -54,6 +55,7 @@ export class InventoryValidationProcessor extends RequestProcessor {
 
 export class PaymentProcessor extends RequestProcessor {
   protected async canHandle(request: RequestCreatedEvent['data']): Promise<boolean> {
+    console.log(`💳 Processing payment for ${request.drink_name}`);
     return true; // Always process payment
   }
 
@@ -87,6 +89,7 @@ export class PaymentProcessor extends RequestProcessor {
 
 export class MachineDispenseProcessor extends RequestProcessor {
   protected async canHandle(request: RequestCreatedEvent['data']): Promise<boolean> {
+    console.log(`🥤 Dispensing ${request.drink_name} from machine ${request.machine_name}`);
     return true; // Always try to dispense
   }
 
@@ -109,6 +112,7 @@ export class MachineDispenseProcessor extends RequestProcessor {
 
 export class CustomerNotificationProcessor extends RequestProcessor {
   protected async canHandle(request: RequestCreatedEvent['data']): Promise<boolean> {
+    console.log(`📱 Sending notification to ${request.customer_name}`);
     return true; // Always notify customer
   }
 
