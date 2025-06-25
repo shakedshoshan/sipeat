@@ -1,7 +1,7 @@
 "use server"
 
 import { RequestCreatedEvent } from '@/lib/kafka';
-import { sendKafkaEventNotification } from '@/lib/discord';
+import { discordNotificationService } from '@/lib/discordNotificationService';
 
 // Chain of Responsibility Pattern: Request processing pipeline
 export abstract class RequestProcessor {
@@ -162,34 +162,23 @@ class RequestCreatedHandler {
       console.log(`✨ Request processing completed for: ${event.data.customer_name}\n`);
       
       // Send Discord notification for successful processing
-      console.log('Sending Discord notification for successful request processing...');
-      try {
-        await sendKafkaEventNotification({
-          eventType: event.type,
-          eventData: event.data,
-          success: true
-        });
-        console.log('Discord notification sent successfully for request event');
-      } catch (discordError) {
-        console.error('Failed to send Discord notification for request event:', discordError);
-        // Don't fail the event processing if Discord notification fails
-      }
+      console.log('Publishing Discord notification for successful request processing...');
+      await discordNotificationService.publishDiscordNotification({
+        eventType: event.type,
+        originalEventData: event.data,
+        success: true
+      });
     } catch (error) {
       console.error(`❌ Error processing request:`, error);
       
       // Send Discord notification for failed processing
-      console.log('Sending Discord notification for failed request processing...');
-      try {
-        await sendKafkaEventNotification({
-          eventType: event.type,
-          eventData: event.data,
-          success: false,
-          error: error instanceof Error ? error : new Error(String(error))
-        });
-        console.log('Discord notification sent for failed request event');
-      } catch (discordError) {
-        console.error('Failed to send Discord notification for failed request event:', discordError);
-      }
+      console.log('Publishing Discord notification for failed request processing...');
+      await discordNotificationService.publishDiscordNotification({
+        eventType: event.type,
+        originalEventData: event.data,
+        success: false,
+        error: error instanceof Error ? error : new Error(String(error))
+      });
       
       // In production, you might want to:
       // 1. Refund payment if it was charged

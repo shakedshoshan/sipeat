@@ -1,7 +1,7 @@
 "use server"
 
 import { ContactCreatedEvent } from '@/lib/kafka';
-import { sendKafkaEventNotification } from '@/lib/discord';
+import { discordNotificationService } from '@/lib/discordNotificationService';
 
 // Strategy Pattern: Different notification strategies
 interface NotificationStrategy {
@@ -87,34 +87,23 @@ class ContactCreatedHandler {
       console.log(`✨ Contact processing completed for: ${event.data.name}\n`);
       
       // Send Discord notification for successful processing
-      console.log('Sending Discord notification for successful contact processing...');
-      try {
-        await sendKafkaEventNotification({
-          eventType: event.type,
-          eventData: event.data,
-          success: true
-        });
-        console.log('Discord notification sent successfully for contact event');
-      } catch (discordError) {
-        console.error('Failed to send Discord notification for contact event:', discordError);
-        // Don't fail the event processing if Discord notification fails
-      }
+      console.log('Publishing Discord notification for successful contact processing...');
+      await discordNotificationService.publishDiscordNotification({
+        eventType: event.type,
+        originalEventData: event.data,
+        success: true
+      });
     } catch (error) {
       console.error(`❌ Error processing contact event:`, error);
       
       // Send Discord notification for failed processing
-      console.log('Sending Discord notification for failed contact processing...');
-      try {
-        await sendKafkaEventNotification({
-          eventType: event.type,
-          eventData: event.data,
-          success: false,
-          error: error instanceof Error ? error : new Error(String(error))
-        });
-        console.log('Discord notification sent for failed contact event');
-      } catch (discordError) {
-        console.error('Failed to send Discord notification for failed contact event:', discordError);
-      }
+      console.log('Publishing Discord notification for failed contact processing...');
+      await discordNotificationService.publishDiscordNotification({
+        eventType: event.type,
+        originalEventData: event.data,
+        success: false,
+        error: error instanceof Error ? error : new Error(String(error))
+      });
       
       // In production, you might want to send to a retry queue
     }

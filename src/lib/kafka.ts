@@ -66,13 +66,25 @@ export interface MachineCreatedEvent extends BaseEvent {
   };
 }
 
-export type SipeatEvent = ContactCreatedEvent | RequestCreatedEvent | MachineCreatedEvent;
+export interface DiscordNotificationEvent extends BaseEvent {
+  type: 'discord.notification';
+  data: {
+    eventType: string;
+    originalEventData: any;
+    success: boolean;
+    error?: string;
+    notificationId: string;
+  };
+}
+
+export type SipeatEvent = ContactCreatedEvent | RequestCreatedEvent | MachineCreatedEvent | DiscordNotificationEvent;
 
 // Topic names - converted to async function
 const TOPICS_CONST = {
   CONTACT_EVENTS: 'sipeat.contact.events',
   REQUEST_EVENTS: 'sipeat.request.events',
   MACHINE_EVENTS: 'sipeat.machine.events',
+  DISCORD_NOTIFICATIONS: 'sipeat.discord.notifications',
 } as const;
 
 export async function getTopics() {

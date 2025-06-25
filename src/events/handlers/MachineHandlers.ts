@@ -1,7 +1,7 @@
 "use server"
 
 import { MachineCreatedEvent } from '@/lib/kafka';
-import { sendKafkaEventNotification } from '@/lib/discord';
+import { discordNotificationService } from '@/lib/discordNotificationService';
 
 // Command Pattern: Machine setup commands
 export interface Command {
@@ -180,35 +180,24 @@ class MachineCreatedHandler {
       console.log(`🚀 Machine is now operational and ready for customers!\n`);
       
       // Send Discord notification for successful processing
-      console.log('Sending Discord notification for successful machine setup...');
-      try {
-        await sendKafkaEventNotification({
-          eventType: event.type,
-          eventData: event.data,
-          success: true
-        });
-        console.log('Discord notification sent successfully for machine event');
-      } catch (discordError) {
-        console.error('Failed to send Discord notification for machine event:', discordError);
-        // Don't fail the event processing if Discord notification fails
-      }
+      console.log('Publishing Discord notification for successful machine setup...');
+      await discordNotificationService.publishDiscordNotification({
+        eventType: event.type,
+        originalEventData: event.data,
+        success: true
+      });
     } catch (error) {
       console.error(`❌ Machine setup failed for: ${event.data.name}`);
       console.log(`📞 Contact technical support for assistance\n`);
       
       // Send Discord notification for failed processing
-      console.log('Sending Discord notification for failed machine setup...');
-      try {
-        await sendKafkaEventNotification({
-          eventType: event.type,
-          eventData: event.data,
-          success: false,
-          error: error instanceof Error ? error : new Error(String(error))
-        });
-        console.log('Discord notification sent for failed machine event');
-      } catch (discordError) {
-        console.error('Failed to send Discord notification for failed machine event:', discordError);
-      }
+      console.log('Publishing Discord notification for failed machine setup...');
+      await discordNotificationService.publishDiscordNotification({
+        eventType: event.type,
+        originalEventData: event.data,
+        success: false,
+        error: error instanceof Error ? error : new Error(String(error))
+      });
     }
   }
 }

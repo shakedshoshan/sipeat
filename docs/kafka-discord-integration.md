@@ -58,6 +58,7 @@ Each topic handles a specific event type:
 | sipeat.contact.events | contact.created | Triggered when a customer submits a contact form |
 | sipeat.request.events | request.created | Triggered when a customer requests a drink |
 | sipeat.machine.events | machine.created | Triggered when a new machine is added |
+| sipeat.discord.notifications | discord.notification | Discord notification events for all processed events |
 
 ## Discord Integration
 

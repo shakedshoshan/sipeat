@@ -4,11 +4,13 @@ import { createEventConsumerInstance, getTopics } from '@/lib/kafka';
 import { createContactCreatedHandler } from './handlers/ContactHandlers';
 import { createRequestCreatedHandler } from './handlers/RequestHandlers';
 import { createMachineCreatedHandler } from './handlers/MachineHandlers';
+import { createDiscordNotificationHandler } from './handlers/DiscordHandlers';
 
 class SipeatEventConsumer {
   private contactConsumer: any | null; // Using any temporarily
   private requestConsumer: any | null; // Using any temporarily
   private machineConsumer: any | null; // Using any temporarily
+  private discordConsumer: any | null; // Using any temporarily
   private topics: any; // Store topics
 
   constructor() {
@@ -16,6 +18,7 @@ class SipeatEventConsumer {
     this.contactConsumer = null;
     this.requestConsumer = null;
     this.machineConsumer = null;
+    this.discordConsumer = null;
     this.topics = null;
   }
 
@@ -30,21 +33,25 @@ class SipeatEventConsumer {
       this.contactConsumer = await createEventConsumerInstance('sipeat-contact-processor');
       this.requestConsumer = await createEventConsumerInstance('sipeat-request-processor');
       this.machineConsumer = await createEventConsumerInstance('sipeat-machine-processor');
+      this.discordConsumer = await createEventConsumerInstance('sipeat-discord-processor');
 
       // Register event handlers using factory functions
       const contactHandler = await createContactCreatedHandler();
       const requestHandler = await createRequestCreatedHandler();
       const machineHandler = await createMachineCreatedHandler();
+      const discordHandler = await createDiscordNotificationHandler();
       
       this.contactConsumer.registerHandler('contact.created', contactHandler);
       this.requestConsumer.registerHandler('request.created', requestHandler);
       this.machineConsumer.registerHandler('machine.created', machineHandler);
+      this.discordConsumer.registerHandler('discord.notification', discordHandler);
 
       // Subscribe to topics
       await Promise.all([
         this.contactConsumer.subscribe([this.topics.CONTACT_EVENTS]),
         this.requestConsumer.subscribe([this.topics.REQUEST_EVENTS]),
         this.machineConsumer.subscribe([this.topics.MACHINE_EVENTS]),
+        this.discordConsumer.subscribe([this.topics.DISCORD_NOTIFICATIONS]),
       ]);
 
       console.log('✅ All event consumers initialized successfully');
@@ -52,6 +59,7 @@ class SipeatEventConsumer {
       console.log(`   - ${this.topics.CONTACT_EVENTS}`);
       console.log(`   - ${this.topics.REQUEST_EVENTS}`);
       console.log(`   - ${this.topics.MACHINE_EVENTS}`);
+      console.log(`   - ${this.topics.DISCORD_NOTIFICATIONS}`);
       
     } catch (error) {
       console.error('❌ Failed to initialize event consumers:', error);
@@ -65,6 +73,7 @@ class SipeatEventConsumer {
       this.contactConsumer.shutdown(),
       this.requestConsumer.shutdown(),
       this.machineConsumer.shutdown(),
+      this.discordConsumer.shutdown(),
     ]);
     console.log('✅ All consumers shut down gracefully');
   }
@@ -79,11 +88,13 @@ class SipeatEventConsumer {
         contact: 'running',
         request: 'running',
         machine: 'running',
+        discord: 'running',
       },
       topics: [
         this.topics.CONTACT_EVENTS,
         this.topics.REQUEST_EVENTS,
         this.topics.MACHINE_EVENTS,
+        this.topics.DISCORD_NOTIFICATIONS,
       ]
     };
   }

@@ -25,6 +25,7 @@ async function main() {
     console.log('   • contact.created - Welcome emails, sales notifications, CRM updates');
     console.log('   • request.created - Inventory validation, payment processing, drink dispensing');
     console.log('   • machine.created - Location validation, inventory setup, network configuration');
+    console.log('   • discord.notification - Discord webhook notifications for all events');
     console.log('\n🔄 Processing events in real-time...');
     console.log('📊 Press Ctrl+C to stop the consumers gracefully');
     
