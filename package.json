@@ -9,6 +9,7 @@
     "lint": "next lint",
     "kafka:start": "docker-compose up -d",
     "kafka:stop": "docker-compose down",
+    "kafka:ui": "echo 'Kafka UI is running at http://localhost:8080' && open http://localhost:8080 || start http://localhost:8080 || xdg-open http://localhost:8080",
     "consumers": "npx tsx scripts/start-consumers.ts"
   },
   "dependencies": {
