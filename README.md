@@ -16,6 +16,7 @@ Built as a freelance project for SipEat, a company specializing in vending machi
 - **Contact Integration**: Easily create and manage contacts.
 - **Multi-language Support**: Supports multiple languages for a global audience.
 - **Responsive Design**: Optimized for all device sizes.
+- **Discord Notifications**: Real-time event notifications via Discord webhooks.
 
 ## Technologies Used
 - [Next.js](https://nextjs.org/) - React framework for server-side rendering.
@@ -23,13 +24,16 @@ Built as a freelance project for SipEat, a company specializing in vending machi
 - [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework.
 - [TypeScript](https://www.typescriptlang.org/) - Static typing for JavaScript.
 - [Vercel](https://vercel.com/) - Deployment platform.
+- [Apache Kafka](https://kafka.apache.org/) - Event streaming platform.
+- [Discord Webhooks](https://discord.com/developers/docs/resources/webhook) - For real-time notifications.
 
-## Getting Started
+## 🚀 Getting Started with Event-Driven Architecture
 
 ### Prerequisites
 - Node.js (v18 or later)
-- npm or yarn
+- Docker & Docker Compose (for Kafka)
 - Supabase account (for backend services)
+- Discord server with webhook URL (for notifications)
 
 ### Installation
 1. Clone the repository:
@@ -43,22 +47,73 @@ Built as a freelance project for SipEat, a company specializing in vending machi
 3. Install dependencies:
    ```bash
    npm install
-   # or
-   yarn install
-   ```
-4. Start the development server:
-   ```bash
-   npm run dev
-   # or
-   yarn dev
    ```
 
-### Environment Variables
-Create a `.env.local` file in the root directory and add the following variables:
-```env
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
-```
+### 🎯 Kafka Event System Setup
+
+1. **Start Kafka Infrastructure:**
+   ```bash
+   npm run kafka:start
+   ```
+
+2. **Set Environment Variables:**
+   Create a `.env.local` file in the root directory:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+   KAFKA_BROKER=localhost:9092
+   DISCORD_WEBHOOK=your-discord-webhook-url
+   ```
+
+3. **Start Applications:**
+   ```bash
+   # Terminal 1: Start the web application
+   npm run dev
+   
+   # Terminal 2: Start event consumers
+   npm run consumers
+   ```
+
+### 🔄 Event-Driven Features
+
+This project demonstrates a complete event-driven architecture with:
+
+- **📧 Contact Events**: Automated email workflows, sales notifications, CRM integration
+- **🥤 Request Events**: Drink order processing with inventory validation and payment
+- **🏭 Machine Events**: Automated machine setup and configuration
+
+**Design Patterns Implemented:**
+- Observer Pattern (Event handlers)
+- Strategy Pattern (Notification strategies) 
+- Chain of Responsibility (Request processing)
+- Command Pattern (Machine setup with undo)
+- Factory Pattern (Processing chain creation)
+
+📖 **[See full Kafka documentation](docs/kafka-setup.md)**
+
+### 🔔 Discord Integration
+
+SipEat includes Discord webhook integration for real-time event notifications:
+
+1. **Create a Discord Webhook:**
+   - Go to your Discord server
+   - Edit a channel > Integrations > Webhooks
+   - Create a new webhook and copy the URL
+
+2. **Add the Webhook URL to Environment:**
+   - Add `DISCORD_WEBHOOK=your-webhook-url` to your `.env.local` file
+
+3. **Notification Features:**
+   - Real-time alerts for all Kafka events
+   - Color-coded messages (green for success, red for errors)
+   - Detailed event data in embedded format
+   - Error information when events fail
+
+4. **Testing Discord Integration:**
+   - Submit a contact form
+   - Create a new machine
+   - Submit a drink request
+   - Check your Discord channel for notifications
 
 ## API Endpoints
 - **Contact**: `/api/contact` - Create a new contact.

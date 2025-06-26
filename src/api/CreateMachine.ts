@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import { Machine } from '@/types/types_db';
+import { getEventPublisher, getTopics, MachineCreatedEvent } from '@/lib/kafka';
 
 export type MachineData = Omit<Machine, 'id'>;
 
@@ -33,7 +34,36 @@ export async function createMachine(machineData: MachineData) {
       throw error;
     }
 
-    return data?.[0] as Machine || null;
+    const createdMachine = data?.[0] as Machine;
+
+    if (createdMachine) {
+      // Publish machine.created event to Kafka
+      try {
+        const event: MachineCreatedEvent = {
+          id: `machine-${createdMachine.id}`,
+          type: 'machine.created',
+          timestamp: new Date().toISOString(),
+          source: 'sipeat-web-app',
+          data: {
+            machineId: createdMachine.id,
+            name: createdMachine.name,
+            country: createdMachine.country,
+            city: createdMachine.city,
+            street: createdMachine.street || undefined,
+          }
+        };
+
+        const publisher = await getEventPublisher();
+        const topics = await getTopics();
+        await publisher.publishEvent(topics.MACHINE_EVENTS, event);
+        console.log(`📨 Machine event published for: ${createdMachine.name}`);
+      } catch (eventError) {
+        console.error('Failed to publish machine event:', eventError);
+        // Don't fail the API call if event publishing fails
+      }
+    }
+
+    return createdMachine || null;
   } catch (error) {
     console.error('Failed to create machine:', error);
     return null;

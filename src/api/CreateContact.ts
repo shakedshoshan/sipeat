@@ -1,4 +1,7 @@
+"use server"
+
 import { supabase } from '@/lib/supabase';
+import { getEventPublisher, getTopics, ContactCreatedEvent } from '@/lib/kafka';
 
 export type ContactData = {
   name: string;
@@ -41,7 +44,37 @@ export async function createContact(contactData: ContactData) {
       throw error;
     }
 
-    return data?.[0] || null;
+    const createdContact = data?.[0];
+    
+    if (createdContact) {
+      // Publish contact.created event to Kafka
+      try {
+        const event: ContactCreatedEvent = {
+          id: `contact-${createdContact.id}`,
+          type: 'contact.created',
+          timestamp: new Date().toISOString(),
+          source: 'sipeat-web-app',
+          data: {
+            contactId: createdContact.id,
+            name: createdContact.name,
+            email: createdContact.email,
+            phone: createdContact.phone.toString(),
+            company_name: createdContact.company_name,
+            message: createdContact.message,
+          }
+        };
+
+        const publisher = await getEventPublisher();
+        const topics = await getTopics();
+        await publisher.publishEvent(topics.CONTACT_EVENTS, event);
+        console.log(`📨 Contact event published for: ${createdContact.name}`);
+      } catch (eventError) {
+        console.error('Failed to publish contact event:', eventError);
+        // Don't fail the API call if event publishing fails
+      }
+    }
+
+    return createdContact;
   } catch (error) {
     console.error('Failed to create contact submission:', error);
     return null;

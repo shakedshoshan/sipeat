@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import { DrinkRequest } from '@/types/types_db';
+import { getEventPublisher, getTopics, RequestCreatedEvent } from '@/lib/kafka';
 
 export type DrinkRequestData = Omit<DrinkRequest, 'id'>;
 
@@ -32,7 +33,43 @@ export async function createDrinkRequest(requestData: DrinkRequestData) {
       throw error;
     }
 
-    return data?.[0] as DrinkRequest || null;
+    const createdRequest = data?.[0] as DrinkRequest;
+
+    if (createdRequest) {
+      // Get machine name for the event
+      const { data: machineData } = await supabase
+        .from('machine')
+        .select('name')
+        .eq('id', createdRequest.machine)
+        .single();
+
+      // Publish request.created event to Kafka
+      try {
+        const event: RequestCreatedEvent = {
+          id: `request-${createdRequest.id}`,
+          type: 'request.created',
+          timestamp: new Date().toISOString(),
+          source: 'sipeat-web-app',
+          data: {
+            requestId: createdRequest.id,
+            customer_name: createdRequest.customer_name,
+            drink_name: createdRequest.drink_name,
+            machine_id: createdRequest.machine,
+            machine_name: machineData?.name || 'Unknown Machine',
+          }
+        };
+
+        const publisher = await getEventPublisher();
+        const topics = await getTopics();
+        await publisher.publishEvent(topics.REQUEST_EVENTS, event);
+        console.log(`📨 Request event published for: ${createdRequest.customer_name}`);
+      } catch (eventError) {
+        console.error('Failed to publish request event:', eventError);
+        // Don't fail the API call if event publishing fails
+      }
+    }
+
+    return createdRequest || null;
   } catch (error) {
     console.error('Failed to create drink request:', error);
     return null;
