@@ -23,7 +23,9 @@ export default function RequestForm() {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownContentRef = useRef<HTMLDivElement>(null);
 
   // Filter drinks based on search term and current language
   const filteredDrinks = drinksList.filter(drink => 
@@ -65,7 +67,38 @@ export default function RequestForm() {
     };
   }, []);
   
-    // Handle touch events for mobile devices
+    // Detect keyboard visibility on mobile
+  useEffect(() => {
+    // Use visual viewport API to detect keyboard
+    const handleResize = () => {
+      if (typeof window !== 'undefined' && 'visualViewport' in window) {
+        // If the visual viewport height is significantly less than the window height,
+        // the keyboard is likely visible
+        const windowHeight = window.innerHeight;
+        const viewportHeight = (window as any).visualViewport.height;
+        
+        // Consider keyboard visible if viewport height is less than 80% of window height
+        setKeyboardVisible(viewportHeight < windowHeight * 0.8);
+      }
+    };
+    
+    // Listen for visual viewport changes
+    if (typeof window !== 'undefined' && 'visualViewport' in window) {
+      (window as any).visualViewport.addEventListener('resize', handleResize);
+    }
+    
+    // Also listen for regular resize events as fallback
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      if (typeof window !== 'undefined' && 'visualViewport' in window) {
+        (window as any).visualViewport.removeEventListener('resize', handleResize);
+      }
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+  // Handle touch events for mobile devices
   useEffect(() => {
     if (!dropdownRef.current) return;
     
@@ -134,6 +167,21 @@ export default function RequestForm() {
   const handleDrinkSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     setIsDropdownOpen(true);
+  };
+  
+  // Handle keyboard navigation in dropdown
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!isDropdownOpen) {
+      if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        setIsDropdownOpen(true);
+      }
+      return;
+    }
+    
+    if (e.key === 'Escape') {
+      setIsDropdownOpen(false);
+    }
   };
 
   const handleDrinkSelect = (drink: Drink) => {
@@ -227,12 +275,14 @@ export default function RequestForm() {
               onClick={() => setIsDropdownOpen(true)}
               onTouchStart={() => setIsDropdownOpen(true)}
               onFocus={() => setIsDropdownOpen(true)}
+              onKeyDown={handleKeyDown}
               className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38bdf8]"
               placeholder={messages.requestForm.drinkNamePlaceholder}
               autoComplete="off"
               role="combobox"
               aria-expanded={isDropdownOpen}
               aria-haspopup="listbox"
+              enterKeyHint="search"
             />
             <button
               type="button"
@@ -251,7 +301,10 @@ export default function RequestForm() {
             />
             
             {isDropdownOpen && (
-              <div className="dropdown-content absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm touch-auto overscroll-contain">
+              <div 
+                ref={dropdownContentRef}
+                className={`dropdown-content ${keyboardVisible ? 'fixed bottom-0 top-auto' : 'absolute top-full bottom-auto'} z-50 left-0 right-0 mt-1 w-full bg-white shadow-lg max-h-40 md:max-h-60 rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm touch-auto overscroll-contain`}
+                style={{ maxWidth: "calc(100vw - 2rem)" }}>
               {filteredDrinks.length > 0 ? (
                 filteredDrinks.map((drink) => (
                   <button
