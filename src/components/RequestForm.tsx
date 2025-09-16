@@ -23,9 +23,7 @@ export default function RequestForm() {
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [keyboardVisible, setKeyboardVisible] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const dropdownContentRef = useRef<HTMLDivElement>(null);
 
   // Filter drinks based on search term and current language
   const filteredDrinks = drinksList.filter(drink => 
@@ -66,87 +64,6 @@ export default function RequestForm() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  
-    // Detect keyboard visibility on mobile
-  useEffect(() => {
-    // Use visual viewport API to detect keyboard
-    const handleResize = () => {
-      if (typeof window !== 'undefined' && 'visualViewport' in window) {
-        // If the visual viewport height is significantly less than the window height,
-        // the keyboard is likely visible
-        const windowHeight = window.innerHeight;
-        const viewportHeight = (window as any).visualViewport.height;
-        
-        // Consider keyboard visible if viewport height is less than 80% of window height
-        setKeyboardVisible(viewportHeight < windowHeight * 0.8);
-      }
-    };
-    
-    // Listen for visual viewport changes
-    if (typeof window !== 'undefined' && 'visualViewport' in window) {
-      (window as any).visualViewport.addEventListener('resize', handleResize);
-    }
-    
-    // Also listen for regular resize events as fallback
-    window.addEventListener('resize', handleResize);
-    
-    return () => {
-      if (typeof window !== 'undefined' && 'visualViewport' in window) {
-        (window as any).visualViewport.removeEventListener('resize', handleResize);
-      }
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-  
-  // Handle touch events for mobile devices
-  useEffect(() => {
-    if (!dropdownRef.current) return;
-    
-    const dropdownElement = dropdownRef.current.querySelector('.dropdown-content');
-    const inputElement = dropdownRef.current.querySelector('#drink_search') as HTMLElement | null;
-    
-    // Prevent default touch behaviors that might interfere with dropdown
-    function handleTouchMove(e: Event) {
-      const touchEvent = e as unknown as TouchEvent;
-      if (isDropdownOpen && dropdownElement?.contains(touchEvent.target as Node)) {
-        // Allow scrolling within the dropdown
-        e.stopPropagation();
-      }
-    }
-    
-    // Force open dropdown on input touch
-    function handleInputTouch(e: Event) {
-      setIsDropdownOpen(true);
-      // Delay focus to ensure dropdown opens properly on mobile
-      setTimeout(() => {
-        const target = e.target as HTMLElement;
-        target.focus();
-      }, 100);
-    }
-    
-    // Ensure dropdown stays open during scrolling
-    function handleTouchStart(e: Event) {
-      const touchEvent = e as unknown as TouchEvent;
-      if (dropdownElement?.contains(touchEvent.target as Node)) {
-        e.stopPropagation();
-      }
-    }
-    
-    if (inputElement) {
-      inputElement.addEventListener('touchstart', handleInputTouch, { passive: false } as AddEventListenerOptions);
-    }
-    
-    document.addEventListener('touchmove', handleTouchMove, { passive: false } as AddEventListenerOptions);
-    document.addEventListener('touchstart', handleTouchStart, { passive: false } as AddEventListenerOptions);
-    
-    return () => {
-      if (inputElement) {
-        inputElement.removeEventListener('touchstart', handleInputTouch);
-      }
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchstart', handleTouchStart);
-    };
-  }, [isDropdownOpen]);
 
   // Fetch machines from Supabase
   const { data: machines, loading: loadingMachines, error: machinesError } = 
@@ -167,21 +84,6 @@ export default function RequestForm() {
   const handleDrinkSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     setIsDropdownOpen(true);
-  };
-  
-  // Handle keyboard navigation in dropdown
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!isDropdownOpen) {
-      if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        setIsDropdownOpen(true);
-      }
-      return;
-    }
-    
-    if (e.key === 'Escape') {
-      setIsDropdownOpen(false);
-    }
   };
 
   const handleDrinkSelect = (drink: Drink) => {
@@ -262,68 +164,45 @@ export default function RequestForm() {
           />
         </div>
         
-        <div className="mb-4 relative" ref={dropdownRef}>
+        <div className="mb-4" ref={dropdownRef}>
           <label htmlFor="drink_search" className="block text-sm font-medium text-gray-700 mb-1">
             {messages.requestForm.drinkName}
           </label>
-          <div className="relative">
-            <input
-              type="text"
-              id="drink_search"
-              value={searchTerm}
-              onChange={handleDrinkSearch}
-              onClick={() => setIsDropdownOpen(true)}
-              onTouchStart={() => setIsDropdownOpen(true)}
-              onFocus={() => setIsDropdownOpen(true)}
-              onKeyDown={handleKeyDown}
-              className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38bdf8]"
-              placeholder={messages.requestForm.drinkNamePlaceholder}
-              autoComplete="off"
-              role="combobox"
-              aria-expanded={isDropdownOpen}
-              aria-haspopup="listbox"
-              enterKeyHint="search"
-            />
-            <button
-              type="button"
-              className="absolute inset-y-0 right-0 flex items-center px-2"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              aria-label="Toggle dropdown"
-            >
-              <svg className="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </button>
-            <input 
-              type="hidden" 
-              name="drink_name" 
-              value={formData.drink_name} 
-            />
-            
-            {isDropdownOpen && (
-              <div 
-                ref={dropdownContentRef}
-                className={`dropdown-content ${keyboardVisible ? 'fixed bottom-0 top-auto' : 'absolute top-full bottom-auto'} z-50 left-0 right-0 mt-1 w-full bg-white shadow-lg max-h-40 md:max-h-60 rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm touch-auto overscroll-contain`}
-                style={{ maxWidth: "calc(100vw - 2rem)" }}>
+          <input
+            type="text"
+            id="drink_search"
+            value={searchTerm}
+            onChange={handleDrinkSearch}
+            onClick={() => setIsDropdownOpen(true)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#38bdf8]"
+            placeholder={messages.requestForm.drinkNamePlaceholder}
+            autoComplete="off"
+          />
+          <input 
+            type="hidden" 
+            name="drink_name" 
+            value={formData.drink_name} 
+          />
+          
+          {isDropdownOpen && (
+            <div className="absolute z-10 mt-1 w-72 bg-white shadow-lg max-h-60 rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm">
               {filteredDrinks.length > 0 ? (
                 filteredDrinks.map((drink) => (
-                  <button
-                    type="button"
+                  <div
                     key={drink.id}
-                    className="w-full text-left cursor-pointer select-none relative py-4 pl-3 pr-3 hover:bg-gray-100 touch-auto md:py-2"
+                    className="cursor-pointer select-none relative py-2 pl-3 pr-3 hover:bg-gray-100"
                     onClick={() => handleDrinkSelect(drink)}
                   >
                     {drink.translations[language as keyof typeof drink.translations]}
-                  </button>
+                  </div>
                 ))
               ) : (
                 <div className="cursor-default select-none relative py-2 pl-3 pr-9 text-gray-500">
                   No drinks found
                 </div>
               )}
-              </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
         
         <div className="mb-4">
