@@ -64,6 +64,23 @@ export default function RequestForm() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  
+  // Handle touch events for mobile devices
+  useEffect(() => {
+    const dropdownElement = dropdownRef.current?.querySelector('.overflow-auto');
+    
+    function handleTouchStart(e: TouchEvent) {
+      // Prevent default only if we're touching the dropdown list
+      if (isDropdownOpen && dropdownElement?.contains(e.target as Node)) {
+        e.stopPropagation();
+      }
+    }
+    
+    document.addEventListener('touchstart', handleTouchStart, { passive: false });
+    return () => {
+      document.removeEventListener('touchstart', handleTouchStart);
+    };
+  }, [isDropdownOpen]);
 
   // Fetch machines from Supabase
   const { data: machines, loading: loadingMachines, error: machinesError } = 
@@ -185,12 +202,12 @@ export default function RequestForm() {
           />
           
           {isDropdownOpen && (
-            <div className="absolute z-10 mt-1 w-72 bg-white shadow-lg max-h-60 rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm">
+            <div className="absolute z-10 mt-1 w-full max-w-[18rem] bg-white shadow-lg max-h-60 rounded-md py-1 text-base overflow-auto focus:outline-none sm:text-sm touch-auto overscroll-contain">
               {filteredDrinks.length > 0 ? (
                 filteredDrinks.map((drink) => (
                   <div
                     key={drink.id}
-                    className="cursor-pointer select-none relative py-2 pl-3 pr-3 hover:bg-gray-100"
+                    className="cursor-pointer select-none relative py-3 pl-3 pr-3 hover:bg-gray-100 touch-auto md:py-2"
                     onClick={() => handleDrinkSelect(drink)}
                   >
                     {drink.translations[language as keyof typeof drink.translations]}
