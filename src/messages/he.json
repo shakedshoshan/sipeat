@@ -79,13 +79,13 @@
     "title": "צור קשר",
     "description": "מעוניינים בשירותים שלנו? מלאו את הטופס למטה ואנחנו נחזור אליכם בהקדם האפשרי!",
     "form": {
-      "name": "השם שלך",
-      "email": "האימייל שלך",
-      "phone": "מספר הטלפון שלך",
-      "company_name": "שם החברה שלך",
-      "mechine_location": "מיקום המכונה",
-      "message": "ההודעה שלך",
-      "submit": "שלח הודעה"
+      "name": "שם מלא",
+      "email": "אימייל",
+      "phone": "מספר טלפון",
+      "company_name": "שם החברה",
+      "mechine_location": "כתובת להצבת מכונה",
+      "message": "פירוט נוסף",
+      "submit": "שלח"
     }
   },
   "backToTop": "חזרה למעלה",
@@ -96,8 +96,8 @@
   },
   "requestForm": {
     "title": "הזמן משקה",
-    "customerName": "השם שלך*",
-    "customerNamePlaceholder": "הכנס את שמך",
+    "customerName": "שם מלא*",
+    "customerNamePlaceholder": "הכנס את שמך*",
     "drinkName": "שם המשקה*",
     "drinkNamePlaceholder": "הכנס את שם המשקה",
     "selectMachine": "בחר מכונה*",
